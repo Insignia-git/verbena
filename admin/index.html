@@ -9,8 +9,17 @@
   <style>
     body { background: #f8f9fa; }
     .page-wrap { max-width: 1240px; margin: 24px auto; }
-    .table td, .table th { vertical-align: middle; }
-    .response-cell { max-width: 320px; white-space: pre-wrap; }
+    .table { font-size: .82rem; }
+    .table td, .table th { vertical-align: middle; padding: .35rem .45rem; line-height: 1.2; }
+    .table th { white-space: nowrap; }
+    .response-cell {
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .table code { font-size: .75rem; }
+    .btn.btn-sm { padding: .15rem .4rem; font-size: .72rem; }
   </style>
 </head>
 <body>

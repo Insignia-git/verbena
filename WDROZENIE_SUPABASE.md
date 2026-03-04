@@ -8,7 +8,7 @@
 
 ```sql
 update public.admin_access
-set pass_hash = crypt('TU_WPISZ_MOCNY_KOD_ADMINA', gen_salt('bf')),
+set pass_hash = md5('TU_WPISZ_MOCNY_KOD_ADMINA'),
     updated_at = now()
 where id = 1;
 ```

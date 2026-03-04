@@ -17,7 +17,7 @@ create table if not exists public.admin_access (
 );
 
 insert into public.admin_access (id, pass_hash)
-values (1, crypt('CHANGE_ME_ADMIN_CODE', gen_salt('bf')))
+values (1, md5('CHANGE_ME_ADMIN_CODE'))
 on conflict (id) do nothing;
 
 create or replace function public.admin_list_submissions(
@@ -51,7 +51,7 @@ begin
     select 1
     from public.admin_access aa
     where aa.id = 1
-      and aa.pass_hash = crypt(p_admin_code, aa.pass_hash)
+      and aa.pass_hash = md5(p_admin_code)
   ) into v_ok;
 
   if not v_ok then
@@ -96,7 +96,7 @@ begin
     select 1
     from public.admin_access aa
     where aa.id = 1
-      and aa.pass_hash = crypt(p_admin_code, aa.pass_hash)
+      and aa.pass_hash = md5(p_admin_code)
   ) into v_ok;
 
   if not v_ok then
@@ -130,7 +130,7 @@ begin
     select 1
     from public.admin_access aa
     where aa.id = 1
-      and aa.pass_hash = crypt(p_admin_code, aa.pass_hash)
+      and aa.pass_hash = md5(p_admin_code)
   ) into v_ok;
 
   if not v_ok then
@@ -162,7 +162,7 @@ begin
     select 1
     from public.admin_access aa
     where aa.id = 1
-      and aa.pass_hash = crypt(p_admin_code, aa.pass_hash)
+      and aa.pass_hash = md5(p_admin_code)
   ) into v_ok;
 
   if not v_ok then
