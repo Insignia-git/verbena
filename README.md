@@ -1,5 +1,10 @@
 # verbena
 # Wdrożenie strony konkursowej (Supabase + statyczny hosting)
+git status
+git add .
+git status (sprawdź co jest staged)
+git commit -m "..."
+git push
 
 git add .
 git commit -m "first commit"

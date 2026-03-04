@@ -179,6 +179,17 @@
           }
         });
       });
+
+      tableBody.querySelectorAll('[data-action="restore"]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            await callAdminAction('admin_restore_submission', btn.dataset.id, 'Zgłoszenie przywrócone do statusu NOWE.');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
     }
 
     function renderRows(rows) {
@@ -191,6 +202,7 @@
         const disabledClass = row.status === 'ODRZUCONE' ? 'table-secondary' : '';
         const acceptDisabled = row.status === 'ZAAKCEPTOWANE' || row.status === 'ODRZUCONE';
         const rejectDisabled = row.status === 'ODRZUCONE';
+        const showRestore = row.status === 'ODRZUCONE';
         return `
           <tr class="${disabledClass}">
             <td>${formatDate(row.created_at)}</td>
@@ -209,6 +221,7 @@
               <div class="d-flex flex-wrap gap-1">
                 <button class="btn btn-sm btn-success" data-action="accept" data-id="${row.id}" ${acceptDisabled ? 'disabled' : ''}>Akceptuj</button>
                 <button class="btn btn-sm btn-outline-danger" data-action="reject" data-id="${row.id}" ${rejectDisabled ? 'disabled' : ''}>Odrzuć</button>
+                ${showRestore ? `<button class="btn btn-sm btn-outline-primary" data-action="restore" data-id="${row.id}">Przywróć</button>` : ''}
               </div>
             </td>
           </tr>

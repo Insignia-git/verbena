@@ -41,6 +41,7 @@ on conflict (id) do nothing;
 drop function if exists public.admin_list_submissions(text);
 drop function if exists public.admin_accept_submission(text, uuid);
 drop function if exists public.admin_reject_submission(text, uuid);
+drop function if exists public.admin_restore_submission(text, uuid);
 drop function if exists public.admin_disable_submission(text, uuid);
 drop function if exists public.admin_mark_checked(text, uuid);
 
@@ -226,9 +227,45 @@ begin
 end;
 $$;
 
+create or replace function public.admin_restore_submission(
+  p_admin_code text,
+  p_submission_id uuid
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_ok boolean;
+begin
+  select exists (
+    select 1
+    from public.admin_access aa
+    where aa.id = 1
+      and aa.pass_hash = md5(p_admin_code)
+  ) into v_ok;
+
+  if not v_ok then
+    raise exception 'UNAUTHORIZED';
+  end if;
+
+  update public.contest_submissions
+  set is_active = true,
+      approved = false,
+      approved_at = null,
+      status = 'NOWE'
+  where id = p_submission_id
+    and status = 'ODRZUCONE';
+
+  return found;
+end;
+$$;
+
 grant execute on function public.admin_list_submissions(text) to anon, authenticated;
 grant execute on function public.admin_accept_submission(text, uuid) to anon, authenticated;
 grant execute on function public.admin_reject_submission(text, uuid) to anon, authenticated;
+grant execute on function public.admin_restore_submission(text, uuid) to anon, authenticated;
 
 insert into storage.buckets (id, name, public)
 values ('konkurs-zgloszenia', 'konkurs-zgloszenia', false)
