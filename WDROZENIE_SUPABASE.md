@@ -2,13 +2,15 @@
 
 ## 1) Konfiguracja bazy
 1. W projekcie Supabase uruchom SQL z pliku `supabase-schema.sql`.
-2. Skopiuj `Project URL` i `anon public key`.
-3. Uzupełnij plik `supabase-config.js`.
+2. Jeśli baza była już wcześniej uruchomiona na starszym formularzu, uruchom dodatkowo `supabase-migration-2026-03-04.sql`.
+3. Skopiuj `Project URL` i `anon public key`.
+4. Uzupełnij plik `supabase-config.js`.
 
 ## 2) Jak to działa
-- `rejestracja.html` zapisuje zgłoszenie do tabeli `contest_submissions`.
-- `status.html` pobiera status przez RPC `check_submission_status`.
-- Plik zakupu (opcjonalny) zapisuje się do bucketu `konkurs-zgloszenia`.
+- `index.html` zawiera dwie zakładki: rejestrację zgłoszenia oraz sprawdzanie statusu.
+- Rejestracja zapisuje zgłoszenie do tabeli `contest_submissions`.
+- Status pobiera dane przez RPC `check_submission_status`.
+- Zdjęcie paragonu (wymagane) zapisuje się do bucketu `konkurs-zgloszenia`.
 
 ## 3) CORS i domena produkcyjna
 Docelowa domena: `https://radosnysmakwiosny.verbena.pl`
@@ -20,9 +22,9 @@ Docelowa domena: `https://radosnysmakwiosny.verbena.pl`
 
 ## 4) Publikacja plików statycznych
 Na hosting wrzuć minimum:
-- `index.html` (przekierowanie na formularz),
-- wszystkie 4 pliki HTML,
+- `index.html`,
 - `supabase-config.js`,
+- `cookie-consent.js`,
 - ewentualnie ten plik instrukcji.
 
 ## 5) Dane organizatora (ustawione)
