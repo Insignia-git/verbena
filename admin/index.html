@@ -27,7 +27,7 @@
     <div class="card shadow-sm border-0 mb-3">
       <div class="card-body p-4">
         <h1 class="h4 mb-1">Panel admin</h1>
-        <p class="text-muted mb-3">Lista zgłoszeń + szybkie akcje (akceptacja, sprawdzenie, wyłączenie).</p>
+        <p class="text-muted mb-3">Lista zgłoszeń + szybkie akcje (akceptacja, odrzucenie).</p>
 
         <form id="adminAuthForm" class="row g-2 align-items-end">
           <div class="col-md-4">
@@ -55,8 +55,6 @@
                 <th>Data</th>
                 <th>Numer</th>
                 <th>Status</th>
-                <th>Aktywne</th>
-                <th>Zaakcept.</th>
                 <th>Imię i nazwisko</th>
                 <th>Telefon</th>
                 <th>E-mail</th>
@@ -66,7 +64,7 @@
               </tr>
             </thead>
             <tbody id="submissionsBody">
-              <tr><td colspan="11" class="text-center p-4 text-muted">Wpisz kod administratora i pobierz listę zgłoszeń.</td></tr>
+              <tr><td colspan="9" class="text-center p-4 text-muted">Wpisz kod administratora i pobierz listę zgłoszeń.</td></tr>
             </tbody>
           </table>
         </div>
@@ -170,23 +168,12 @@
         });
       });
 
-      tableBody.querySelectorAll('[data-action="check"]').forEach((btn) => {
+      tableBody.querySelectorAll('[data-action="reject"]').forEach((btn) => {
         btn.addEventListener('click', async () => {
+          if (!confirm('Na pewno odrzucić to zgłoszenie?')) return;
           btn.disabled = true;
           try {
-            await callAdminAction('admin_mark_checked', btn.dataset.id, 'Zgłoszenie oznaczone jako sprawdzone.');
-          } finally {
-            btn.disabled = false;
-          }
-        });
-      });
-
-      tableBody.querySelectorAll('[data-action="disable"]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          if (!confirm('Na pewno wyłączyć to zgłoszenie?')) return;
-          btn.disabled = true;
-          try {
-            await callAdminAction('admin_disable_submission', btn.dataset.id, 'Zgłoszenie wyłączone.');
+            await callAdminAction('admin_reject_submission', btn.dataset.id, 'Zgłoszenie odrzucone.');
           } finally {
             btn.disabled = false;
           }
@@ -196,19 +183,19 @@
 
     function renderRows(rows) {
       if (!rows || rows.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="11" class="text-center p-4 text-muted">Brak zgłoszeń.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="9" class="text-center p-4 text-muted">Brak zgłoszeń.</td></tr>';
         return;
       }
 
       tableBody.innerHTML = rows.map((row) => {
-        const disabledClass = row.is_active ? '' : 'table-secondary';
+        const disabledClass = row.status === 'ODRZUCONE' ? 'table-secondary' : '';
+        const acceptDisabled = row.status === 'ZAAKCEPTOWANE' || row.status === 'ODRZUCONE';
+        const rejectDisabled = row.status === 'ODRZUCONE';
         return `
           <tr class="${disabledClass}">
             <td>${formatDate(row.created_at)}</td>
             <td><code>${escapeHtml(row.submission_code)}</code></td>
             <td>${escapeHtml(row.status || '-')}</td>
-            <td>${row.is_active ? 'TAK' : 'NIE'}</td>
-            <td>${row.approved ? 'TAK' : 'NIE'}</td>
             <td>${escapeHtml(row.first_name)} ${escapeHtml(row.last_name)}</td>
             <td>${escapeHtml(row.phone)}</td>
             <td>${escapeHtml(row.email)}</td>
@@ -220,9 +207,8 @@
             </td>
             <td>
               <div class="d-flex flex-wrap gap-1">
-                <button class="btn btn-sm btn-success" data-action="accept" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Akceptuj</button>
-                <button class="btn btn-sm btn-outline-secondary" data-action="check" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Sprawdź</button>
-                <button class="btn btn-sm btn-outline-danger" data-action="disable" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Wyłącz</button>
+                <button class="btn btn-sm btn-success" data-action="accept" data-id="${row.id}" ${acceptDisabled ? 'disabled' : ''}>Akceptuj</button>
+                <button class="btn btn-sm btn-outline-danger" data-action="reject" data-id="${row.id}" ${rejectDisabled ? 'disabled' : ''}>Odrzuć</button>
               </div>
             </td>
           </tr>

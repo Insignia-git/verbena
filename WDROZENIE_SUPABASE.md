@@ -21,7 +21,7 @@ where id = 1;
 - Rejestracja zapisuje zgłoszenie do tabeli `contest_submissions`.
 - Status pobiera dane przez RPC `check_submission_status`.
 - Zdjęcie paragonu (wymagane) zapisuje się do bucketu `konkurs-zgloszenia`.
-- `admin/index.html` to prosty panel administratora (lista zgłoszeń, paragon, akceptacja, sprawdzenie, wyłączenie).
+- `admin/index.html` to prosty panel administratora (lista zgłoszeń, paragon, akceptacja, odrzucenie).
 
 ## 3) CORS i domena produkcyjna
 Docelowa domena: `https://radosnysmakwiosny.verbena.pl`
