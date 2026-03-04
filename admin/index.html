@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel admin - Konkurs Verbena</title>
+  <meta name="description" content="Prosty panel administracyjny zgłoszeń konkursowych." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; }
+    .page-wrap { max-width: 1240px; margin: 24px auto; }
+    .table td, .table th { vertical-align: middle; }
+    .response-cell { max-width: 320px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="container page-wrap">
+    <div class="card shadow-sm border-0 mb-3">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-1">Panel admin</h1>
+        <p class="text-muted mb-3">Lista zgłoszeń + szybkie akcje (akceptacja, sprawdzenie, wyłączenie).</p>
+
+        <form id="adminAuthForm" class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <label for="adminCode" class="form-label">Kod administratora</label>
+            <input id="adminCode" class="form-control" type="password" autocomplete="current-password" required>
+          </div>
+          <div class="col-md-auto">
+            <button class="btn btn-primary" type="submit" id="loginBtn">Pobierz zgłoszenia</button>
+          </div>
+          <div class="col-md-auto">
+            <button class="btn btn-outline-secondary" type="button" id="refreshBtn" disabled>Odśwież</button>
+          </div>
+        </form>
+
+        <div id="authInfo" class="alert d-none mt-3" role="alert"></div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover mb-0" id="submissionsTable">
+            <thead class="table-light">
+              <tr>
+                <th>Data</th>
+                <th>Numer</th>
+                <th>Status</th>
+                <th>Aktywne</th>
+                <th>Zaakcept.</th>
+                <th>Imię i nazwisko</th>
+                <th>Telefon</th>
+                <th>E-mail</th>
+                <th>Odpowiedź</th>
+                <th>Paragon</th>
+                <th>Akcje</th>
+              </tr>
+            </thead>
+            <tbody id="submissionsBody">
+              <tr><td colspan="11" class="text-center p-4 text-muted">Wpisz kod administratora i pobierz listę zgłoszeń.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+  <script>
+    const authForm = document.getElementById('adminAuthForm');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const authInfo = document.getElementById('authInfo');
+    const tableBody = document.getElementById('submissionsBody');
+
+    const cfg = window.SUPABASE_CONFIG || {};
+    const supabase = cfg.url && cfg.anonKey ? window.supabase.createClient(cfg.url, cfg.anonKey) : null;
+
+    let adminCode = '';
+    let cachedRows = [];
+
+    function showInfo(type, message) {
+      authInfo.className = `alert mt-3 alert-${type}`;
+      authInfo.textContent = message;
+      authInfo.classList.remove('d-none');
+    }
+
+    function formatDate(value) {
+      if (!value) return '-';
+      return new Date(value).toLocaleString('pl-PL');
+    }
+
+    function escapeHtml(value) {
+      if (value === null || value === undefined) return '';
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    async function openReceipt(path) {
+      if (!path) {
+        showInfo('warning', 'Brak załączonego paragonu dla tego zgłoszenia.');
+        return;
+      }
+
+      const bucket = cfg.bucket || 'konkurs-zgloszenia';
+      const expiresIn = cfg.adminSignedUrlExpires || 120;
+      const { data, error } = await supabase.storage.from(bucket).createSignedUrl(path, expiresIn);
+      if (error || !data?.signedUrl) {
+        showInfo('danger', `Nie udało się pobrać linku do paragonu: ${error?.message || 'brak signedUrl'}`);
+        return;
+      }
+
+      window.open(data.signedUrl, '_blank', 'noopener');
+    }
+
+    async function callAdminAction(rpcName, submissionId, successMessage) {
+      const { data, error } = await supabase.rpc(rpcName, {
+        p_admin_code: adminCode,
+        p_submission_id: submissionId
+      });
+
+      if (error) {
+        showInfo('danger', `Błąd akcji: ${error.message}`);
+        return;
+      }
+
+      if (!data) {
+        showInfo('warning', 'Akcja nie została zastosowana (brak zmian).');
+        return;
+      }
+
+      showInfo('success', successMessage);
+      await loadSubmissions();
+    }
+
+    function bindRowActions() {
+      tableBody.querySelectorAll('[data-action="receipt"]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            await openReceipt(btn.dataset.path || '');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+
+      tableBody.querySelectorAll('[data-action="accept"]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            await callAdminAction('admin_accept_submission', btn.dataset.id, 'Zgłoszenie zaakceptowane.');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+
+      tableBody.querySelectorAll('[data-action="check"]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            await callAdminAction('admin_mark_checked', btn.dataset.id, 'Zgłoszenie oznaczone jako sprawdzone.');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+
+      tableBody.querySelectorAll('[data-action="disable"]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Na pewno wyłączyć to zgłoszenie?')) return;
+          btn.disabled = true;
+          try {
+            await callAdminAction('admin_disable_submission', btn.dataset.id, 'Zgłoszenie wyłączone.');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+    }
+
+    function renderRows(rows) {
+      if (!rows || rows.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="11" class="text-center p-4 text-muted">Brak zgłoszeń.</td></tr>';
+        return;
+      }
+
+      tableBody.innerHTML = rows.map((row) => {
+        const disabledClass = row.is_active ? '' : 'table-secondary';
+        return `
+          <tr class="${disabledClass}">
+            <td>${formatDate(row.created_at)}</td>
+            <td><code>${escapeHtml(row.submission_code)}</code></td>
+            <td>${escapeHtml(row.status || '-')}</td>
+            <td>${row.is_active ? 'TAK' : 'NIE'}</td>
+            <td>${row.approved ? 'TAK' : 'NIE'}</td>
+            <td>${escapeHtml(row.first_name)} ${escapeHtml(row.last_name)}</td>
+            <td>${escapeHtml(row.phone)}</td>
+            <td>${escapeHtml(row.email)}</td>
+            <td class="response-cell">${escapeHtml(row.product_models)}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" data-action="receipt" data-path="${escapeHtml(row.attachment_path || '')}" ${row.attachment_path ? '' : 'disabled'}>
+                Paragon
+              </button>
+            </td>
+            <td>
+              <div class="d-flex flex-wrap gap-1">
+                <button class="btn btn-sm btn-success" data-action="accept" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Akceptuj</button>
+                <button class="btn btn-sm btn-outline-secondary" data-action="check" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Sprawdź</button>
+                <button class="btn btn-sm btn-outline-danger" data-action="disable" data-id="${row.id}" ${row.is_active ? '' : 'disabled'}>Wyłącz</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      bindRowActions();
+    }
+
+    async function loadSubmissions() {
+      if (!supabase) {
+        showInfo('danger', 'Brak konfiguracji Supabase. Uzupełnij supabase-config.js');
+        return;
+      }
+
+      const { data, error } = await supabase.rpc('admin_list_submissions', {
+        p_admin_code: adminCode
+      });
+
+      if (error) {
+        showInfo('danger', `Nie udało się pobrać zgłoszeń: ${error.message}`);
+        return;
+      }
+
+      cachedRows = data || [];
+      renderRows(cachedRows);
+      showInfo('success', `Pobrano ${cachedRows.length} zgłoszeń.`);
+      refreshBtn.disabled = false;
+    }
+
+    authForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      adminCode = document.getElementById('adminCode').value.trim();
+      if (!adminCode) return;
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Pobieranie...';
+      try {
+        await loadSubmissions();
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Pobierz zgłoszenia';
+      }
+    });
+
+    refreshBtn.addEventListener('click', async () => {
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = 'Odświeżanie...';
+      try {
+        await loadSubmissions();
+      } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = 'Odśwież';
+      }
+    });
+  </script>
+</body>
+</html>

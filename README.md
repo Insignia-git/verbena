@@ -4,16 +4,17 @@
 git add .
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/Insignia-git/verbena.git
-git push -u origin main
 
+git push -u origin main
+https://insignia-git.github.io/verbena/
 ## Aktualna struktura
 
 Projekt działa jako single-page:
 - `index.html` – zakładka Rejestracja + zakładka Status zgłoszenia,
+- `admin/index.html` – prosty panel administracyjny zgłoszeń,
 - `supabase-config.js` – konfiguracja klienta Supabase,
 - `cookie-consent.js` – panel zgód cookies,
-- `supabase-schema.sql` i `supabase-migration-2026-03-04.sql` – SQL bazy.
+- `supabase-schema.sql`, `supabase-migration-2026-03-04.sql` i `supabase-migration-admin-2026-03-04.sql` – SQL bazy.
 
 ## Panel cookies (RODO/ePrivacy)
 

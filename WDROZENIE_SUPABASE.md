@@ -3,14 +3,25 @@
 ## 1) Konfiguracja bazy
 1. W projekcie Supabase uruchom SQL z pliku `supabase-schema.sql`.
 2. Jeśli baza była już wcześniej uruchomiona na starszym formularzu, uruchom dodatkowo `supabase-migration-2026-03-04.sql`.
-3. Skopiuj `Project URL` i `anon public key`.
-4. Uzupełnij plik `supabase-config.js`.
+3. Jeśli chcesz panel admin, uruchom też `supabase-migration-admin-2026-03-04.sql`.
+4. Ustaw własny kod administratora (zamiast domyślnego):
+
+```sql
+update public.admin_access
+set pass_hash = crypt('TU_WPISZ_MOCNY_KOD_ADMINA', gen_salt('bf')),
+    updated_at = now()
+where id = 1;
+```
+
+5. Skopiuj `Project URL` i `anon public key`.
+6. Uzupełnij plik `supabase-config.js`.
 
 ## 2) Jak to działa
 - `index.html` zawiera dwie zakładki: rejestrację zgłoszenia oraz sprawdzanie statusu.
 - Rejestracja zapisuje zgłoszenie do tabeli `contest_submissions`.
 - Status pobiera dane przez RPC `check_submission_status`.
 - Zdjęcie paragonu (wymagane) zapisuje się do bucketu `konkurs-zgloszenia`.
+- `admin/index.html` to prosty panel administratora (lista zgłoszeń, paragon, akceptacja, sprawdzenie, wyłączenie).
 
 ## 3) CORS i domena produkcyjna
 Docelowa domena: `https://radosnysmakwiosny.verbena.pl`
@@ -23,6 +34,7 @@ Docelowa domena: `https://radosnysmakwiosny.verbena.pl`
 ## 4) Publikacja plików statycznych
 Na hosting wrzuć minimum:
 - `index.html`,
+- `admin/index.html`,
 - `supabase-config.js`,
 - `cookie-consent.js`,
 - ewentualnie ten plik instrukcji.
