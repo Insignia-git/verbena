@@ -3,9 +3,7 @@
 
 git add .
 git commit -m "first commit"
-git branch -M main
-
-git push -u origin main
+git push origin main
 https://insignia-git.github.io/verbena/
 ## Aktualna struktura
 
