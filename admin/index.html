@@ -66,6 +66,16 @@
       --bs-btn-hover-color: #fff;
       --bs-btn-hover-bg: #198754;
       --bs-btn-hover-border-color: #198754;
+      color: #fff;
+      background-color: #198754;
+      border-color: #198754;
+    }
+    .btn-favorite-active:hover,
+    .btn-favorite-active:focus,
+    .btn-favorite-active:active {
+      color: #fff;
+      background-color: #198754;
+      border-color: #198754;
     }
   </style>
 </head>
@@ -74,11 +84,10 @@
     <div class="card shadow-sm border-0 mb-3">
       <div class="card-body p-4">
         <h1 class="h4 mb-1">Panel admin</h1>
-        <p class="text-muted mb-3">Lista zgłoszeń + szybkie akcje (akceptacja, odrzucenie).</p>
 
         <form id="adminAuthForm" class="row g-2 align-items-end">
           <div class="col-md-4">
-            <label for="adminCode" class="form-label">Kod administratora</label>
+            <label for="adminCode" class="form-label">Hasło</label>
             <input id="adminCode" class="form-control" type="password" autocomplete="current-password" required>
           </div>
           <div class="col-md-auto">
@@ -112,7 +121,7 @@
               </tr>
             </thead>
             <tbody id="submissionsBody">
-              <tr><td colspan="10" class="text-center p-4 text-muted">Wpisz kod administratora i pobierz listę zgłoszeń.</td></tr>
+              <tr><td colspan="10" class="text-center p-4 text-muted">Wpisz hasło</td></tr>
             </tbody>
           </table>
         </div>
