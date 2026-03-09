@@ -260,6 +260,28 @@
       return filePath;
     }
 
+    async function sendConfirmationEmail(supabase, cfg, payload, submissionCode) {
+      if (cfg.sendConfirmationEmail === false) {
+        return false;
+      }
+
+      const functionName = cfg.confirmationFunction || "send-confirmation-email";
+      const invokeResult = await supabase.functions.invoke(functionName, {
+        body: {
+          email: payload.email,
+          firstName: payload.first_name,
+          submissionCode: submissionCode
+        }
+      });
+
+      if (invokeResult.error) {
+        console.warn("Email confirmation error:", invokeResult.error.message || invokeResult.error);
+        return false;
+      }
+
+      return true;
+    }
+
     registrationForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       registrationResult.hidden = true;
@@ -301,6 +323,8 @@
         if (insertResult.error) {
           throw new Error(insertResult.error.message);
         }
+
+        await sendConfirmationEmail(supabase, cfg, payload, submissionCode);
 
         registrationForm.reset();
         showResult(registrationResult, "success", "Zgloszenie zostalo zapisane. Twoj numer zgloszenia: " + submissionCode, false);

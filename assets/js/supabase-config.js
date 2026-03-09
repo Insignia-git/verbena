@@ -4,5 +4,7 @@ window.SUPABASE_CONFIG = {
   table: "contest_submissions",
   bucket: "konkurs-zgloszenia",
   statusRpc: "check_submission_status",
-  adminSignedUrlExpires: 120
+  adminSignedUrlExpires: 120,
+  confirmationFunction: "send-confirmation-email",
+  sendConfirmationEmail: true
 };

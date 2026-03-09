@@ -46,3 +46,28 @@ Na hosting wrzuć minimum:
 - Podole 60, 30-394 Kraków, woj. małopolskie
 
 Regulamin, klauzule i kanały kontaktu można dopisać po otrzymaniu finalnej treści od klienta.
+
+## 6) Potwierdzenie e-mail po zgloszeniu (Edge Function)
+
+Frontend po poprawnym zapisie zgloszenia wywoluje funkcje `send-confirmation-email`.
+
+1. Ustaw sekrety w Supabase:
+
+```bash
+supabase secrets set RESEND_API_KEY=twoj_klucz
+supabase secrets set RESEND_FROM="Konkurs Verbena <noreply@twojadomena.pl>"
+```
+
+2. Wdroz funkcje:
+
+```bash
+supabase functions deploy send-confirmation-email
+```
+
+3. Upewnij sie, ze w `assets/js/supabase-config.js` masz:
+- `confirmationFunction: "send-confirmation-email"`
+- `sendConfirmationEmail: true`
+
+Uwagi:
+- Brak wysylki e-maila nie blokuje zapisu zgloszenia (zgloszenie jest nadal przyjete).
+- Tresc i temat maila ustawisz w `supabase/functions/send-confirmation-email/index.ts`.
