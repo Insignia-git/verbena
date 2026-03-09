@@ -3,7 +3,7 @@
 git status
 git add .
 git status (sprawdź co jest staged)
-git commit -m "..."
+git commit -m "fix"
 git push
 
 git add .
