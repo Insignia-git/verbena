@@ -6,19 +6,12 @@ create table if not exists public.contest_submissions (
   status text not null default 'NOWE',
   is_active boolean not null default true,
   approved boolean not null default false,
+  is_favorite boolean not null default false,
   approved_at timestamptz,
-  checked_at timestamptz,
   first_name text not null,
   last_name text not null,
   phone text not null,
   email text not null,
-  city text,
-  street text,
-  house_number text,
-  flat_number text,
-  postal_code text,
-  purchase_place text,
-  purchase_date date,
   product_models text not null,
   attachment_path text,
   consent_rules boolean not null default false,
@@ -42,6 +35,7 @@ drop function if exists public.admin_list_submissions(text);
 drop function if exists public.admin_accept_submission(text, uuid);
 drop function if exists public.admin_reject_submission(text, uuid);
 drop function if exists public.admin_restore_submission(text, uuid);
+drop function if exists public.admin_toggle_favorite(text, uuid);
 drop function if exists public.admin_disable_submission(text, uuid);
 drop function if exists public.admin_mark_checked(text, uuid);
 
@@ -110,6 +104,7 @@ returns table (
   status text,
   is_active boolean,
   approved boolean,
+  is_favorite boolean,
   approved_at timestamptz,
   first_name text,
   last_name text,
@@ -145,6 +140,7 @@ begin
     cs.status,
     cs.is_active,
     cs.approved,
+    cs.is_favorite,
     cs.approved_at,
     cs.first_name,
     cs.last_name,
@@ -219,6 +215,7 @@ begin
   update public.contest_submissions
   set is_active = false,
       approved = false,
+      is_favorite = false,
       approved_at = null,
       status = 'ODRZUCONE'
   where id = p_submission_id;
@@ -253,6 +250,7 @@ begin
   update public.contest_submissions
   set is_active = true,
       approved = false,
+      is_favorite = false,
       approved_at = null,
       status = 'NOWE'
   where id = p_submission_id
@@ -262,10 +260,44 @@ begin
 end;
 $$;
 
+create or replace function public.admin_toggle_favorite(
+  p_admin_code text,
+  p_submission_id uuid
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_ok boolean;
+begin
+  select exists (
+    select 1
+    from public.admin_access aa
+    where aa.id = 1
+      and aa.pass_hash = md5(p_admin_code)
+  ) into v_ok;
+
+  if not v_ok then
+    raise exception 'UNAUTHORIZED';
+  end if;
+
+  update public.contest_submissions
+  set is_favorite = not coalesce(is_favorite, false)
+  where id = p_submission_id
+    and status = 'ZAAKCEPTOWANE'
+    and is_active = true;
+
+  return found;
+end;
+$$;
+
 grant execute on function public.admin_list_submissions(text) to anon, authenticated;
 grant execute on function public.admin_accept_submission(text, uuid) to anon, authenticated;
 grant execute on function public.admin_reject_submission(text, uuid) to anon, authenticated;
 grant execute on function public.admin_restore_submission(text, uuid) to anon, authenticated;
+grant execute on function public.admin_toggle_favorite(text, uuid) to anon, authenticated;
 
 insert into storage.buckets (id, name, public)
 values ('konkurs-zgloszenia', 'konkurs-zgloszenia', false)

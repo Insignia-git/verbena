@@ -12,17 +12,30 @@
 </head>
 <body>
   <header id="top" class="section hero">
-    <div class="container hero-inner">
-      <div class="fade-in">
-        <div class="hero-badge">Konkurs Verbena 2026</div>
-        <h1 class="hero-title">Radosny smak wiosny</h1>
-        <p class="hero-subtitle">Kup 2 produkty Verbeny, zachowaj paragon i zglos swoja odpowiedz. Szansa na nagrode czeka codziennie.</p>
-        <div class="hero-cta-wrap">
-          <a class="btn btn-primary" href="#formularz">Przejdz do formularza</a>
-          <a class="btn btn-outline" href="#zasady">Zobacz zasady</a>
-        </div>
+    <nav class="top-nav" aria-label="Nawigacja strony konkursu">
+      <div class="top-nav-group top-nav-left">
+        <a class="top-nav-link" href="#opis">Nagrody</a>
+        <a class="top-nav-link" href="#zasady">Zasady konkursu</a>
       </div>
-      <img class="hero-girl fade-in delay" src="assets/images/img-girl.png" alt="Ambasadorka konkursu Verbena" />
+      <a class="top-nav-brand" href="#top" aria-label="Strona glowna Verbena konkurs">
+        <img src="assets/images/Verbena_logo_2018.png" alt="Verbena" />
+      </a>
+      <div class="top-nav-group top-nav-right">
+        <a class="top-nav-link" href="#formularz">Wez udzial</a>
+        <a class="top-nav-link" href="./regulamin.pdf" target="_blank" rel="noopener">Regulamin</a>
+        <a class="top-nav-link" href="#zwyciezscy">Zwyciezcy</a>
+      </div>
+    </nav>
+
+    <div class="container hero-inner">
+      <img class="hero-girl fade-in" src="assets/images/img-girl.png" alt="Ambasadorka konkursu Verbena" />
+      <div class="hero-panel fade-in delay">
+        <p class="hero-kicker">KONKURS</p>
+        <h1 class="hero-title">
+          <span class="hero-title-line hero-title-line-1">Radosny</span>
+          <span class="hero-title-line hero-title-line-2">smak wiosny!</span>
+        </h1>
+      </div>
     </div>
   </header>
 
@@ -177,6 +190,16 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./assets/js/supabase-config.js"></script>
   <script>
+    const topNav = document.querySelector(".top-nav");
+
+    function updateNavScrollState() {
+      if (!topNav) return;
+      topNav.classList.toggle("is-scrolled", window.scrollY > 12);
+    }
+
+    updateNavScrollState();
+    window.addEventListener("scroll", updateNavScrollState, { passive: true });
+
     const registrationForm = document.getElementById("registrationForm");
     const registrationResult = document.getElementById("registrationResult");
     const submitBtn = document.getElementById("submitBtn");

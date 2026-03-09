@@ -5,12 +5,12 @@ begin;
 
 -- Pola adresowo-zakupowe nie są już wymagane w formularzu.
 alter table if exists public.contest_submissions
-  alter column city drop not null,
-  alter column street drop not null,
-  alter column house_number drop not null,
-  alter column postal_code drop not null,
-  alter column purchase_place drop not null,
-  alter column purchase_date drop not null;
+  alter column if exists city drop not null,
+  alter column if exists street drop not null,
+  alter column if exists house_number drop not null,
+  alter column if exists postal_code drop not null,
+  alter column if exists purchase_place drop not null,
+  alter column if exists purchase_date drop not null;
 
 -- Dodatkowe zabezpieczenie: odpowiedź konkursowa pozostaje wymagana.
 alter table if exists public.contest_submissions
