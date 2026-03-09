@@ -15,13 +15,17 @@ https://insignia-git.github.io/verbena/
 Projekt działa jako single-page:
 - `index.html` – zakładka Rejestracja + zakładka Status zgłoszenia,
 - `admin/index.html` – prosty panel administracyjny zgłoszeń,
-- `supabase-config.js` – konfiguracja klienta Supabase,
-- `cookie-consent.js` – panel zgód cookies,
-- `supabase-schema.sql`, `supabase-migration-2026-03-04.sql` i `supabase-migration-admin-2026-03-04.sql` – SQL bazy.
+- `assets/images/` – grafiki (logo, header, ikony, packshoty),
+- `assets/fonts/` – fonty lokalne (Geist i Yanone Kaffeesatz, woff2 + ttf fallback),
+- `assets/css/main.css` – style landing page (wydzielone z `index.html`),
+- `assets/js/supabase-config.js` – konfiguracja klienta Supabase,
+- `assets/js/cookie-consent.js` – panel zgód cookies,
+- `sql/supabase-schema.sql`, `sql/supabase-migration-2026-03-04.sql` i `sql/supabase-migration-admin-2026-03-04.sql` – SQL bazy,
+- `docs/WDROZENIE_SUPABASE.md` – instrukcja wdrożeniowa.
 
 ## Panel cookies (RODO/ePrivacy)
 
-W projekcie działa wspólny panel zgód cookies z pliku `cookie-consent.js`.
+W projekcie działa wspólny panel zgód cookies z pliku `assets/js/cookie-consent.js`.
 
 ### Co robi
 - Zawsze aktywuje tylko cookies niezbędne.

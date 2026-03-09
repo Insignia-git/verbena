@@ -90,7 +90,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../supabase-config.js"></script>
+  <script src="../assets/js/supabase-config.js"></script>
   <script>
     const authForm = document.getElementById('adminAuthForm');
     const refreshBtn = document.getElementById('refreshBtn');
@@ -250,7 +250,7 @@
 
     async function loadSubmissions() {
       if (!supabaseClient) {
-        showInfo('danger', 'Brak konfiguracji Supabase. Uzupełnij supabase-config.js');
+        showInfo('danger', 'Brak konfiguracji Supabase. Uzupelnij assets/js/supabase-config.js');
         return;
       }
 
