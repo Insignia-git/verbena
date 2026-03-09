@@ -128,11 +128,15 @@
               <div class="field full">
                 <div class="check">
                   <input type="checkbox" value="1" id="consent_rules" name="consent_rules" required />
-                  <label for="consent_rules">Oswiadczam, ze zapoznalem/am sie z regulaminem konkursu i spelniam warunki udzialu.</label>
+                  <label for="consent_rules">*Zapoznałem/am się z Regulaminem Konkursu i akceptuję jego postanowienia.</label>
                 </div>
                 <div class="check">
                   <input type="checkbox" value="1" id="consent_privacy" name="consent_privacy" required />
-                  <label for="consent_privacy">Wyrazam zgode na przetwarzanie danych w celu obslugi zgloszenia konkursowego.</label>
+                  <label for="consent_privacy">*Potwierdzam, iż zapoznałem/am się z klauzulą informacyjną dotyczącą przetwarzania danych osobowych, o której mowa w § 9 Regulaminu Konkursu.</label>
+                </div>
+                <div class="check">
+                  <input type="checkbox" value="1" id="consent_marketing" name="consent_marketing" required />
+                  <label for="consent_marketing">*Wyrażam zgodę na otrzymywanie od I.D.C. Polonia S.A. informacji handlowych drogą elektroniczną na podany przeze mnie adres e-mail, dotyczących produktów i usług I.D.C. Polonia S.A.</label>
                 </div>
               </div>
             </div>
@@ -320,7 +324,8 @@
           product_models: (formData.get("product_models") || "").toString().trim(),
           attachment_path: receiptPath,
           consent_rules: formData.get("consent_rules") === "1",
-          consent_privacy: formData.get("consent_privacy") === "1"
+          consent_privacy: formData.get("consent_privacy") === "1",
+          consent_marketing: formData.get("consent_marketing") === "1"
         };
 
         const table = cfg.table || "contest_submissions";

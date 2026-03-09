@@ -16,6 +16,7 @@ create table if not exists public.contest_submissions (
   attachment_path text,
   consent_rules boolean not null default false,
   consent_privacy boolean not null default false,
+  consent_marketing boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -62,7 +63,7 @@ create policy "anon insert submissions"
 on public.contest_submissions
 for insert
 to anon, authenticated
-with check (consent_rules is true and consent_privacy is true);
+with check (consent_rules is true and consent_privacy is true and consent_marketing is true);
 
 drop policy if exists "service full submissions" on public.contest_submissions;
 create policy "service full submissions"
