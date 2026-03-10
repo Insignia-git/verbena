@@ -21,25 +21,27 @@
       }
 
       try {
-        if (sessionStorage.getItem(PRELAUNCH_STORAGE_KEY) === "ok") {
+        if (localStorage.getItem(PRELAUNCH_STORAGE_KEY) === "ok") {
           return;
         }
       } catch (error) {
-        console.warn("Nie udało się odczytać sessionStorage:", error);
+        console.warn("Nie udało się odczytać localStorage:", error);
       }
 
-      const enteredPassword = window.prompt("Podaj hasło dostępu do strony:", "");
-      const isValid = normalizePassword(enteredPassword) === normalizePassword(PRELAUNCH_PASSWORD);
+      let isValid = false;
+      while (!isValid) {
+        const enteredPassword = window.prompt("Podaj hasło dostępu do strony:", "");
+        if (enteredPassword === null) {
+          continue;
+        }
 
-      if (!isValid) {
-        document.body.innerHTML = "<main style='font-family: sans-serif; padding: 24px;'>Brak dostępu.</main>";
-        throw new Error("Access denied");
+        isValid = normalizePassword(enteredPassword) === normalizePassword(PRELAUNCH_PASSWORD);
       }
 
       try {
-        sessionStorage.setItem(PRELAUNCH_STORAGE_KEY, "ok");
+        localStorage.setItem(PRELAUNCH_STORAGE_KEY, "ok");
       } catch (error) {
-        console.warn("Nie udało się zapisać sessionStorage:", error);
+        console.warn("Nie udało się zapisać localStorage:", error);
       }
     })();
   </script>
@@ -62,7 +64,12 @@
       <div class="top-nav-group top-nav-right">
         <a class="top-nav-link" href="#formularz">Weź udział</a>
         <a class="top-nav-link" href="./assets/docs/Regulamin_konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
-        <a class="top-nav-link" href="#zwyciezscy">Zwycięzcy</a>
+      </div>
+      <div class="top-nav-mobile-menu" aria-label="Menu mobilne">
+        <a class="top-nav-link" href="#opis">Nagrody</a>
+        <a class="top-nav-link" href="#zasady">Zasady konkursu</a>
+        <a class="top-nav-link" href="#formularz">Weź udział</a>
+        <a class="top-nav-link" href="./assets/docs/Regulamin_konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
       </div>
     </nav>
 
@@ -83,7 +90,7 @@
       <div class="opis-cta-wrap zasady-cta-wrap">
         <a class="btn btn-primary" href="#formularz">Biorę udział</a>
       </div>
-      <h2 class="opis-heading">Nagrody</h2>
+      <h2 class="section-title opis-heading">Nagrody</h2>
     <div class="opis-grid">
         <article class="prize-card">
           <p class="prize-top-label">Co tydzień</p>
@@ -194,7 +201,7 @@
             </div>
             <button type="submit" class="btn btn-primary form-submit-cta" id="submitBtn">Wysyłam</button>
               <div class="purchase-reminder">
-                <p>PAMIĘTAJ! Zachowaj dowód zakupu do końca trwania konkursu!</p>
+                <p>PAMIĘTAJ!<br class="mobile-only-break"> Zachowaj dowód zakupu do końca trwania konkursu!</p>
               </div>
           </form>
           <div id="registrationResult" class="alert" hidden></div>
@@ -220,7 +227,7 @@
     </div>
   </section>
 
-  <section id="zwyciezscy" class="section winners">
+  <section id="zwyciezscy" class="section winners" hidden>
     <img class="cloud-deco cloud-5" src="assets/images/kwiatek_4.png" alt="" aria-hidden="true" />
     <div class="container">
       <h2 class="winners-title">Zwycięzcy</h2>
@@ -258,7 +265,7 @@
       <img class="logo" src="assets/images/Verbena_logo_2018.png" alt="Logo Verbena" />
       <p class="footer-copy">
         Organizator Konkursu:<br>
-        Chcesz zgłosić błąd lub zadać pytanie? Napisz na <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a><br>
+        Chcesz zgłosić błąd lub zadać pytanie?<br class="mobile-only-break">Napisz na <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a><br>
         <a class="footer-link" href="./polityka-prywatnosci.html">Polityka prywatności</a> | <a class="footer-link" href="#cookie-settings" id="manageCookiesLink">Zarządzaj cookies</a>
       </p>
     </div>
@@ -499,7 +506,7 @@
         registrationForm.reset();
         updateProductModelsCounter();
         updateReceiptFileUi();
-        showResult(registrationResult, "success", "Zgłoszenie zostało zapisane. Twój numer zgłoszenia: " + submissionCode, false);
+        showResult(registrationResult, "success", "Twoje zgłoszenie zostało zapisane.", false);
       } catch (error) {
         showResult(registrationResult, "danger", "Nie udało się zapisać zgłoszenia: " + error.message, false);
       } finally {

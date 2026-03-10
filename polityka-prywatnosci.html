@@ -109,6 +109,27 @@
       color: var(--blue);
       font-weight: 600;
     }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 1rem, 1080px);
+        padding: 1rem 0.7rem;
+      }
+
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.85rem;
+      }
+
+      th,
+      td {
+        min-width: 165px;
+        padding: 0.45rem;
+      }
+    }
   </style>
 </head>
 <body>

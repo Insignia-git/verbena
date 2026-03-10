@@ -181,6 +181,7 @@
 
     .section-title {
       margin: 0 0 1rem;
+      padding-left: 0.12em;
       font-family: "Yanone Kaffeesatz", sans-serif;
       font-size: 5.5rem;
       line-height: 0.95;
@@ -191,6 +192,7 @@
     .winners-title,
     .opis-heading {
       margin: 0 0 1rem;
+      padding-left: 0.12em;
       font-family: "Yanone Kaffeesatz", sans-serif;
       font-size: 5.5rem;
       line-height: 0.95;
@@ -263,7 +265,7 @@
       top: 0;
       width: var(--divider-strip-width, 100%);
       height: var(--divider-height, 42px);
-      transform: translateY(-100%) scaleX(var(--divider-scale-x, 1));
+      transform: translateY(-95%) scaleX(var(--divider-scale-x, 1));
       transform-origin: left top;
       background-image: var(--divider-image);
       background-repeat: repeat-x;
@@ -276,7 +278,7 @@
     .hero {
       position: relative;
       padding: 2.5rem 0 0;
-      background: url("../images/img-header.png") center top / cover no-repeat;
+      background: url("../images/img-header.jpg") center top / cover no-repeat;
     }
 
     .cloud-deco {
@@ -390,17 +392,26 @@
     .top-nav-toggle {
       display: none;
       border: 0;
-      background: rgba(255, 255, 255, 0.92);
+      background: transparent;
+      box-shadow: none;
+      -webkit-tap-highlight-color: transparent;
       width: 48px;
       height: 44px;
       border-radius: 10px;
       padding: 9px 10px;
+      justify-self: end;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       gap: 6px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(29, 58, 143, 0.18);
+    }
+
+    .top-nav-toggle:focus,
+    .top-nav-toggle:focus-visible,
+    .top-nav-toggle:active {
+      outline: none;
+      box-shadow: none;
     }
 
     .top-nav-toggle span {
@@ -441,6 +452,10 @@
     .top-nav-link:hover {
       border-bottom-color: var(--blue);
       opacity: 0.88;
+    }
+
+    .top-nav-mobile-menu {
+      display: none;
     }
 
     header.hero > .container.hero-inner {
@@ -588,8 +603,7 @@
     .opis-cta-wrap {
       display: flex;
       justify-content: center;
-      margin-bottom: 4rem;
-      margin-top: 4rem;
+      margin: 4rem 0;
     }
 
     .opis .zasady-cta-wrap {
@@ -641,6 +655,10 @@
       font-weight: 500;
       color: var(--white);
       line-height: 1.4;
+    }
+
+    .mobile-only-break {
+      display: none;
     }
 
     .opis-heading {
@@ -1084,6 +1102,7 @@ margin-top: 6px;
       grid-template-columns: 1fr;
       gap: 0.9rem;
       align-items: start;
+      padding-left: 23px;
     }
 
     .logo {
@@ -1150,19 +1169,8 @@ margin-top: 6px;
         width: 148px;
       }
 
-      .top-nav-toggle {
-        display: inline-flex;
-        justify-self: end;
-      }
-
       .top-nav-group {
         display: none;
-        grid-column: 1 / -1;
-        width: 100%;
-        gap: 0.4rem;
-        flex-direction: column;
-        align-items: stretch;
-        padding-top: 0.25rem;
       }
 
       .top-nav-left,
@@ -1172,14 +1180,34 @@ margin-top: 6px;
       }
 
       .top-nav.is-open .top-nav-group {
+        display: none;
+      }
+
+      .top-nav-mobile-menu {
+        display: none;
+      }
+
+      .top-nav.is-open .top-nav-mobile-menu {
         display: flex;
+        position: absolute;
+        top: calc(100% + 0.55rem);
+        right: 0;
+        min-width: min(84vw, 320px);
+        padding: 0.7rem;
+        gap: 0.2rem;
+        flex-direction: column;
+        align-items: stretch;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(8px) saturate(1.04);
+        box-shadow: 0 12px 30px rgba(29, 58, 143, 0.2);
+        border-radius: 12px;
       }
 
       .top-nav-link {
         font-size: 1.45rem;
         line-height: 1;
         color: var(--blue);
-        padding: 0.45rem 0.2rem;
+        padding: 0.55rem 0.4rem;
       }
 
       .hero-inner {
@@ -1216,8 +1244,21 @@ margin-top: 6px;
     }
 
     @media (max-width: 640px) {
+      .mobile-only-break {
+        display: block;
+      }
+
+      .section,
+      .stopka {
+        scroll-margin-top: 0;
+      }
+
       .section {
         padding: 4.1rem 0;
+      }
+
+      .section.opis {
+        padding-top: 2.05rem;
       }
 
       .container {
@@ -1227,14 +1268,72 @@ margin-top: 6px;
       .hero {
         min-height: auto;
         padding-top: 1.4rem;
-      }
-
-      .top-nav-link {
-        font-size: 1.25rem;
+        background: url("../images/mobile_header.jpg") center top / cover no-repeat;
       }
 
       .hero-inner {
-        min-height: auto;
+        min-height: clamp(420px, 78vh, 760px);
+      }
+
+      .hero-panel,
+      .hero-girl,
+      .top-nav-brand {
+        display: none;
+      }
+
+      .cloud-1 {
+        display: none;
+      }
+
+      .cloud-4 {
+        display: none;
+      }
+
+      .top-nav {
+        grid-template-columns: 1fr auto;
+        width: auto;
+        right: 0.6rem;
+        left: auto;
+        transform: none;
+        padding: 0;
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .top-nav.is-scrolled {
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .top-nav-toggle {
+        display: inline-flex;
+        margin-top: 4.6rem;
+      }
+
+      .top-nav.is-open .top-nav-mobile-menu {
+        position: fixed;
+        top: 8rem;
+        left: 0;
+        right: 0;
+        width: 100%;
+        min-width: 0;
+        max-height: none;
+        overflow: visible;
+        border-radius: 0;
+        padding: 1rem 1.2rem 1.1rem;
+        gap: 0.35rem;
+        box-sizing: border-box;
+      }
+
+      .top-nav-mobile-menu .top-nav-link {
+        font-size: 1.6rem;
+        line-height: 1.1;
+        padding: 0.7rem 0.2rem;
+        white-space: nowrap;
       }
 
       .hero-badge {
@@ -1254,9 +1353,25 @@ margin-top: 6px;
         gap: 0.9rem;
       }
 
+      .opis > .container > .opis-cta-wrap,
+      .zasady > .container > .opis-cta-wrap {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .opis > .container > .zasady-cta-wrap {
+        margin-top: 0;
+      }
+
+      .section-title,
       .opis-heading {
+        font-size: 4.5rem;
+        margin-left: 10px;
+      }
+
+      .opis-heading {
+        margin-top: 3rem;
         top: 0.9rem;
-        font-size: 3rem;
       }
 
       .opis-grid .prize-card:first-child,
@@ -1265,18 +1380,34 @@ margin-top: 6px;
       }
 
       .prize-card {
-        margin-top: 0;
+        margin-top: 2rem;
       }
 
       .prize-visual {
         height: 15.5rem;
       }
 
+      .prize-top-label {
+        margin-bottom: 0;
+      }
+
+      .prize-bottom-copy {
+        margin-top: 0;
+      }
+
       .opis-center {
-        position: static;
+        position: relative;
+        order: -1;
+        left: auto;
+        top: auto;
         transform: none;
-        width: min(64vw, 220px);
+        width: min(64vw, 250px);
         margin: 0 auto 0.3rem;
+      }
+
+      .opis-center-label .opis-center-value {
+        font-size: 3.8rem;
+        max-width: none;
       }
 
       .panel {
@@ -1285,6 +1416,24 @@ margin-top: 6px;
 
       .btn {
         width: 100%;
+      }
+
+      .opis-cta-wrap .btn {
+        width: auto;
+        min-height: 52px;
+        padding: 0.4rem 1.6rem;
+        font-size: 1.95rem;
+      }
+
+      #zasady a.btn.btn-primary {
+        margin-bottom: 2rem;
+      }
+
+      .form-submit-cta {
+        width: auto;
+        min-height: 52px;
+        padding: 0.4rem 1.6rem;
+        font-size: 1.95rem;
       }
 
       .hero-cta-wrap {
@@ -1307,6 +1456,12 @@ margin-top: 6px;
         width: clamp(84px, 24vw, 130px);
       }
 
+      .cloud-2,
+      .cloud-3,
+      .cloud-5 {
+        width: clamp(108px, 30vw, 170px);
+      }
+
       .cloud-1 {
         right: 4%;
       }
@@ -1314,7 +1469,11 @@ margin-top: 6px;
       .cloud-2,
       .cloud-3,
       .cloud-5 {
-        transform: translate(18%, -50%);
+        transform: translate(-12%, -82%);
+      }
+
+      .cloud-2 {
+        transform: translate(32%, -79%);
       }
 
       .cloud-3,

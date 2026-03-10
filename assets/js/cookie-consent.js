@@ -94,6 +94,33 @@
     });
   }
 
+  function injectResponsiveStyles() {
+    if (document.getElementById('cookieConsentResponsiveStyles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'cookieConsentResponsiveStyles';
+    style.textContent = [
+      '#cookieSettingsPanel .cc-settings-shell { padding: 28px 30px; }',
+      '#cookieSettingsPanel .cc-settings-table-wrap { overflow: auto; -webkit-overflow-scrolling: touch; }',
+      '#cookieSettingsPanel .cc-settings-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.4; table-layout: fixed; }',
+      '#cookieSettingsPanel .cc-settings-table th:nth-child(1), #cookieSettingsPanel .cc-settings-table td:nth-child(1) { width: 25%; }',
+      '#cookieSettingsPanel .cc-settings-table th:nth-child(2), #cookieSettingsPanel .cc-settings-table td:nth-child(2) { width: 57%; }',
+      '#cookieSettingsPanel .cc-settings-table th:nth-child(3), #cookieSettingsPanel .cc-settings-table td:nth-child(3) { width: 18%; min-width: 68px; text-align: center; }',
+      '@media (max-width: 640px) {',
+      '  #cookieSettingsPanel { left: 8px !important; right: 8px !important; bottom: 12px !important; }',
+      '  #cookieSettingsPanel .cc-settings-shell { padding: 14px 12px !important; }',
+      '  #cookieSettingsPanel .cc-settings-table { font-size: 12px !important; }',
+      '  #cookieSettingsPanel .cc-settings-table th, #cookieSettingsPanel .cc-settings-table td { padding: 8px 6px !important; }',
+      '  #cookieSettingsPanel .cc-settings-table th:nth-child(1), #cookieSettingsPanel .cc-settings-table td:nth-child(1) { width: 27% !important; }',
+      '  #cookieSettingsPanel .cc-settings-table th:nth-child(2), #cookieSettingsPanel .cc-settings-table td:nth-child(2) { width: 55% !important; }',
+      '  #cookieSettingsPanel .cc-settings-table th:nth-child(3), #cookieSettingsPanel .cc-settings-table td:nth-child(3) { width: 18% !important; min-width: 64px !important; }',
+      '  #cookieSettingsPanel .cc-settings-table input[type="checkbox"] { width: 20px !important; height: 20px !important; min-width: 20px !important; }',
+      '}'
+    ].join('\n');
+
+    document.head.appendChild(style);
+  }
+
   function createBanner() {
     const wrapper = document.createElement('div');
     wrapper.id = 'cookieConsentBanner';
@@ -122,12 +149,12 @@
     panel.style.cssText = 'position:fixed;left:24px;right:24px;bottom:72px;z-index:1200;display:none;max-width:980px;margin:0 auto;';
     panel.innerHTML = `
       <div style="max-height:72vh;overflow:auto;background:#ffffff;border:1px solid rgba(29,58,143,.22);border-radius:14px;box-shadow:0 20px 42px rgba(0,0,0,.2);">
-        <div style="padding:28px 30px;">
+        <div class="cc-settings-shell" style="padding:28px 30px;">
           <h2 style="margin:0 0 10px;color:#1d3a8f;">Szanujemy Twoją prywatność</h2>
           <p style="margin:0 0 16px;color:#3b3462;">Oto używane w naszym serwisie usługi, które mogą zapisywać na Twoim urządzeniu pliki cookies. Wybierz odpowiadające Ci ustawienia. Zawsze możesz do nich wrócić używając linku, zamieszczonego w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>. Tam też znajdziesz więcej szczegółowych informacji o używanych przez nas plikach cookies.</p>
 
-          <div style="border:1px solid #d9deec;border-radius:10px;overflow:hidden;margin-bottom:16px;">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.4;">
+          <div class="cc-settings-table-wrap" style="border:1px solid #d9deec;border-radius:10px;overflow:hidden;margin-bottom:16px;">
+            <table class="cc-settings-table" style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.4;">
               <thead>
                 <tr style="background:#f5f7ff;">
                   <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #d9deec;color:#1d3a8f;">USŁUGA</th>
@@ -187,6 +214,8 @@
   }
 
   function init() {
+    injectResponsiveStyles();
+
     const currentConsent = loadConsent();
     activateDeferredScripts(currentConsent);
     const shouldOpenFromUrl = new URLSearchParams(window.location.search).get('openCookieSettings') === '1' || window.location.hash === '#cookie-settings';
