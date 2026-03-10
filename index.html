@@ -5,12 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Konkurs Verbena - Radosny Smak Wiosny</title>
   <meta name="description" content="One-page konkursowy Verbena: opis, zasady, formularz zgłoszeniowy i sekcja zwycięzców." />
-  <link rel="preload" href="./assets/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2">
-  <link rel="preload" href="./assets/fonts/Geist/Geist-Bold.woff2" as="font" type="font/woff2">
-  <link rel="preload" href="./assets/fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-Bold.woff2" as="font" type="font/woff2">
+  <link rel="preload" href="./assets/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/Geist/Geist-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./assets/css/main.css" />
 </head>
 <body>
+  <script>
+    (function () {
+      const PRELAUNCH_STORAGE_KEY = "verbena_prelaunch_access";
+      const PRELAUNCH_PASSWORD = "verbena2026";
+
+      function normalizePassword(input) {
+        return (input || "").replace(/\s+/g, "").toLowerCase();
+      }
+
+      try {
+        if (sessionStorage.getItem(PRELAUNCH_STORAGE_KEY) === "ok") {
+          return;
+        }
+      } catch (error) {
+        console.warn("Nie udało się odczytać sessionStorage:", error);
+      }
+
+      const enteredPassword = window.prompt("Podaj hasło dostępu do strony:", "");
+      const isValid = normalizePassword(enteredPassword) === normalizePassword(PRELAUNCH_PASSWORD);
+
+      if (!isValid) {
+        document.body.innerHTML = "<main style='font-family: sans-serif; padding: 24px;'>Brak dostępu.</main>";
+        throw new Error("Access denied");
+      }
+
+      try {
+        sessionStorage.setItem(PRELAUNCH_STORAGE_KEY, "ok");
+      } catch (error) {
+        console.warn("Nie udało się zapisać sessionStorage:", error);
+      }
+    })();
+  </script>
+
   <header id="top" class="section hero">
     <img class="cloud-deco cloud-1" src="assets/images/kwiatek_1.png" alt="" aria-hidden="true" />
     <nav id="top-nav" class="top-nav" aria-label="Nawigacja strony konkursu">
@@ -327,6 +360,16 @@
       return "VERBENA-" + y + m + d + "-" + random;
     }
 
+    function createSupabaseClient(cfg) {
+      return window.supabase.createClient(cfg.url, cfg.anonKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      });
+    }
+
     function updateReceiptFileUi() {
       if (!receiptFileInput || !receiptFileLabel || !receiptFileFeedback) {
         return;
@@ -425,7 +468,7 @@
       submitBtn.textContent = "Wysyłanie...";
 
       try {
-        const supabase = window.supabase.createClient(cfg.url, cfg.anonKey);
+        const supabase = createSupabaseClient(cfg);
         const formData = new FormData(registrationForm);
         const submissionCode = generateSubmissionCode();
         const receiptFile = formData.get("receipt_file");
@@ -482,7 +525,7 @@
       statusBtn.textContent = "Sprawdzanie...";
 
       try {
-        const supabase = window.supabase.createClient(cfg.url, cfg.anonKey);
+        const supabase = createSupabaseClient(cfg);
         const submissionCode = document.getElementById("status_submission_code").value.trim();
         const phone = document.getElementById("status_phone").value.trim();
 

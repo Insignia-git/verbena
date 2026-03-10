@@ -78,6 +78,86 @@
       overflow-x: hidden;
     }
 
+    body.prelaunch-locked {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .prelaunch-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: grid;
+      place-items: center;
+      padding: 1.2rem;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.38), transparent 45%),
+        linear-gradient(140deg, #1d3a8f 0%, #2f5bc9 52%, #cd69aa 100%);
+    }
+
+    .prelaunch-card {
+      width: min(100%, 440px);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 50px rgba(13, 25, 64, 0.36);
+    }
+
+    .prelaunch-logo {
+      width: 140px;
+      margin: 0 auto 0.8rem;
+    }
+
+    .prelaunch-kicker {
+      margin: 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.86rem;
+      color: #4c63a6;
+      font-weight: 600;
+    }
+
+    .prelaunch-card h2 {
+      margin: 0.4rem 0 0.55rem;
+      text-align: center;
+      color: #1d3a8f;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-size: 2.15rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .prelaunch-copy {
+      margin: 0;
+      text-align: center;
+      color: #3c4670;
+    }
+
+    .prelaunch-form {
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .prelaunch-form label {
+      color: #1f336f;
+      font-weight: 600;
+    }
+
+    .prelaunch-form .btn {
+      margin-top: 0.45rem;
+      width: 100%;
+    }
+
+    .prelaunch-error {
+      margin: 0.75rem 0 0;
+      color: #8b1f30;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
     img {
       max-width: 100%;
       display: block;
