@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Konkurs Verbena - Radosny Smak Wiosny</title>
-  <meta name="description" content="One-page konkursowy Verbena: opis, zasady, formularz zgloszeniowy i sekcja zwyciezcow." />
+  <meta name="description" content="One-page konkursowy Verbena: opis, zasady, formularz zgłoszeniowy i sekcja zwycięzców." />
   <link rel="preload" href="./assets/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2">
   <link rel="preload" href="./assets/fonts/Geist/Geist-Bold.woff2" as="font" type="font/woff2">
   <link rel="preload" href="./assets/fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-Bold.woff2" as="font" type="font/woff2">
@@ -17,13 +17,13 @@
         <a class="top-nav-link" href="#opis">Nagrody</a>
         <a class="top-nav-link" href="#zasady">Zasady konkursu</a>
       </div>
-      <a class="top-nav-brand" href="#top" aria-label="Strona glowna Verbena konkurs">
+      <a class="top-nav-brand" href="#top" aria-label="Strona główna Verbena konkurs">
         <img src="assets/images/Verbena_logo_2018.png" alt="Verbena" />
       </a>
       <div class="top-nav-group top-nav-right">
-        <a class="top-nav-link" href="#formularz">Wez udzial</a>
-        <a class="top-nav-link" href="./regulamin.pdf" target="_blank" rel="noopener">Regulamin</a>
-        <a class="top-nav-link" href="#zwyciezscy">Zwyciezcy</a>
+        <a class="top-nav-link" href="#formularz">Weź udział</a>
+        <a class="top-nav-link" href="./assets/docs/Regulamin_konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
+        <a class="top-nav-link" href="#zwyciezscy">Zwycięzcy</a>
       </div>
     </nav>
 
@@ -41,9 +41,10 @@
 
   <section id="opis" class="section opis">
     <div class="container">
-      <div class="opis-cta-wrap">
+      <div class="opis-cta-wrap zasady-cta-wrap">
         <a class="btn btn-primary" href="#formularz">Biorę udział</a>
       </div>
+      <h2 class="opis-heading">Nagrody</h2>
     <div class="opis-grid">
         <article class="prize-card">
           <p class="prize-top-label">Co tydzień</p>
@@ -59,7 +60,7 @@
         </div>
         <article class="prize-card">
           <p class="prize-top-label">Codziennie</p>
-          <img class="prize-visual" src="assets/images/set.png" alt="Zestaw nagrod dziennych Verbena" />
+          <img class="prize-visual" src="assets/images/set.png" alt="Zestaw nagród dziennych Verbena" />
           <p class="prize-bottom-copy">1 x zestaw cukierków<br>i gadżetów Verbena</p>
         </article>
       </div>
@@ -68,63 +69,71 @@
 
   <section id="zasady" class="section zasady">
     <div class="container">
-      <h2 class="section-title">Zasady</h2>
-      <p class="section-copy">Trzy proste kroki i Twoje zgloszenie trafia do konkursu.</p>
-
-      <div class="rules-grid">
+      <h2 class="section-title">Zasady konkursu</h2>
+       <div class="rules-grid">
         <article class="rule">
-          <img src="assets/images/ikona_bag.png" alt="Ikona zakupow" />
-          <strong>1. Kup produkty</strong>
-          <p>Kup minimum 2 produkty Verbena w dowolnym sklepie na terenie Polski.</p>
+          <img src="assets/images/ikona_bag.png" alt="Ikona zakupów" />
+          <strong>1.</strong>
+          <p>Kup 2 produkty Verbeny</p>
         </article>
         <article class="rule">
           <img src="assets/images/ikona_paragon.png" alt="Ikona paragonu" />
-          <strong>2. Zachowaj paragon</strong>
-          <p>Zrob zdjecie paragonu. Format JPG/JPEG/PNG, maksymalny rozmiar 5 MB.</p>
+          <strong>2.</strong>
+          <p>Zachowaj paragon</p>
         </article>
         <article class="rule">
-          <img src="assets/images/ikona_pen.png" alt="Ikona dlugopisu" />
-          <strong>3. Wyslij formularz</strong>
-          <p>Wypelnij formularz i dokoncz zdanie: "Najlepsza wiosenna chwila z Verbena to..."</p>
+          <img src="assets/images/ikona_pen.png" alt="Ikona długopisu" />
+          <strong>3.</strong>
+          <p>Wypełnij formularz i dokończ zdanie:<br><strong>„Najlepsza wiosenna chwila z Verbeną to…”</strong></p>
         </article>
+      </div>
+      <div class="opis-cta-wrap">
+        <a class="btn btn-primary" href="#formularz">Biorę udział</a>
       </div>
     </div>
   </section>
 
   <section id="formularz" class="section formularz">
     <div class="container">
-      <h2 class="section-title">Formularz zgloszeniowy</h2>
-      <p class="section-copy">Uzupelnij dane, dolacz paragon i wyslij zgloszenie. Numer zgloszenia zobaczysz od razu po poprawnym zapisie.</p>
-
-      <div class="forms-wrap">
-        <div class="panel">
-          <h3>Zarejestruj zgloszenie</h3>
+      <h2 class="section-title">Formularz<br>zgłoszeniowy</h2>
+      <div class="forms-wrap forms-wrap--status-only">
+       <div class="panel">
           <form id="registrationForm" novalidate>
+            <div class="form-split">
+              <div class="form-left">
+                <div class="field">
+                  <label for="first_name">Imię *</label>
+                  <input id="first_name" name="first_name" required />
+                </div>
+                <div class="field">
+                  <label for="last_name">Nazwisko *</label>
+                  <input id="last_name" name="last_name" required />
+                </div>
+                <div class="field">
+                  <label for="email">Adres e-mail *</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div class="field">
+                  <label for="phone">Numer telefonu *</label>
+                  <input id="phone" name="phone" pattern="^[0-9]{9}$" maxlength="9" required />
+                </div>
+                <div class="field">
+                  <label for="receipt_file">Wgraj zdjęcie paragonu *</label>
+                  <div class="file-upload">
+                    <input type="file" id="receipt_file" name="receipt_file" accept=".jpg,.jpeg,.png" required />
+                    <span class="file-upload-label" aria-hidden="true">Wybierz plik</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-right">
+                <div class="field">
+                  <label for="product_models">Dokończ zdanie *</label>
+                  <textarea id="product_models" name="product_models" maxlength="1000" placeholder="Najlepsza wiosenna chwila z Verbeną to…" required></textarea>
+                  <div class="char-counter" id="product_models_counter">0/1000</div>
+                </div>
+              </div>
+            </div>
             <div class="grid">
-              <div class="field">
-                <label for="first_name">Imie *</label>
-                <input id="first_name" name="first_name" required />
-              </div>
-              <div class="field">
-                <label for="last_name">Nazwisko *</label>
-                <input id="last_name" name="last_name" required />
-              </div>
-              <div class="field">
-                <label for="phone">Telefon (9 cyfr) *</label>
-                <input id="phone" name="phone" pattern="^[0-9]{9}$" maxlength="9" required />
-              </div>
-              <div class="field">
-                <label for="email">E-mail *</label>
-                <input type="email" id="email" name="email" required />
-              </div>
-              <div class="field full">
-                <label for="product_models">Najlepsza wiosenna chwila z Verbena to... *</label>
-                <textarea id="product_models" name="product_models" maxlength="1000" required></textarea>
-              </div>
-              <div class="field full">
-                <label for="receipt_file">Zdjecie paragonu (JPG/JPEG/PNG, max 5 MB) *</label>
-                <input type="file" id="receipt_file" name="receipt_file" accept=".jpg,.jpeg,.png" required />
-              </div>
               <div class="field full">
                 <div class="check">
                   <input type="checkbox" value="1" id="consent_rules" name="consent_rules" required />
@@ -132,32 +141,35 @@
                 </div>
                 <div class="check">
                   <input type="checkbox" value="1" id="consent_privacy" name="consent_privacy" required />
-                  <label for="consent_privacy">*Potwierdzam, iż zapoznałem/am się z klauzulą informacyjną dotyczącą przetwarzania danych osobowych, o której mowa w § 9 Regulaminu Konkursu.</label>
+                  <label for="consent_privacy">*Potwierdzam, iż zapoznałem/am się z klauzulą informacyjną dotyczącą przetwarzania danych osobowych, o której mowa w § 9 Regulaminu Konkursu oraz <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.</label>
                 </div>
                 <div class="check">
                   <input type="checkbox" value="1" id="consent_marketing" name="consent_marketing" required />
-                  <label for="consent_marketing">*Wyrażam zgodę na otrzymywanie od I.D.C. Polonia S.A. informacji handlowych drogą elektroniczną na podany przeze mnie adres e-mail, dotyczących produktów i usług I.D.C. Polonia S.A.</label>
+                  <label for="consent_marketing">*Wyrażam zgodę na otrzymywanie od I.D.C. Polonia S.A. informacji handlowych drogą elektroniczną na podany przeze mnie adres e-mail, dotyczących produktów i usług I.D.C. Polonia S.A., zgodnie z <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.</label>
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Wyslij zgloszenie</button>
+            <button type="submit" class="btn btn-primary form-submit-cta" id="submitBtn">Wysyłam</button>
+              <div class="purchase-reminder">
+                <p>PAMIĘTAJ! Zachowaj dowód zakupu do końca trwania konkursu!</p>
+              </div>
           </form>
           <div id="registrationResult" class="alert" hidden></div>
         </div>
 
-        <aside class="panel">
-          <h3>Sprawdz status</h3>
-          <p class="status-note">Masz juz numer zgloszenia? Podaj numer i telefon, aby sprawdzic status.</p>
+        <aside class="panel panel-hidden-temporary">
+          <h3>Sprawdź status</h3>
+          <p class="status-note">Masz już numer zgłoszenia? Podaj numer i telefon, aby sprawdzić status.</p>
           <form id="statusForm" novalidate>
             <div class="field">
-              <label for="status_submission_code">Numer zgloszenia *</label>
+              <label for="status_submission_code">Numer zgłoszenia *</label>
               <input type="text" id="status_submission_code" name="submission_code" placeholder="np. VERBENA-20260304-12345" required />
             </div>
             <div class="field">
               <label for="status_phone">Telefon *</label>
               <input type="text" id="status_phone" name="phone" pattern="^[0-9]{9}$" maxlength="9" required />
             </div>
-            <button type="submit" class="btn btn-outline" id="statusBtn">Sprawdz</button>
+            <button type="submit" class="btn btn-outline" id="statusBtn">Sprawdź</button>
           </form>
           <div id="statusResult" class="alert" hidden></div>
         </aside>
@@ -167,20 +179,32 @@
 
   <section id="zwyciezscy" class="section winners">
     <div class="container">
-      <h2 class="winners-title">Zwyciezcy</h2>
-      <div class="winners-grid">
-        <article class="winner">
-          <strong>Nagroda glowna</strong>
-          <span>Wyniki po zakonczeniu konkursu.</span>
-        </article>
-        <article class="winner">
-          <strong>Ranking tygodniowy</strong>
-          <span>Lista laureatow publikowana co tydzien.</span>
-        </article>
-        <article class="winner">
-          <strong>Laureaci dzienni</strong>
-          <span>Aktualizacja codziennie po 12:00.</span>
-        </article>
+      <h2 class="winners-title">Zwycięzcy</h2>
+      <div class="winners-table-wrap">
+        <table class="winners-table">
+          <thead>
+            <tr>
+              <th scope="col">Tydzień 1.</th>
+              <th scope="col">Tydzień 2.</th>
+              <th scope="col">Tydzień 3.</th>
+              <th scope="col">Tydzień 4.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nagroda tygodniowa</td>
+              <td>Nagroda tygodniowa</td>
+              <td>Nagroda tygodniowa</td>
+              <td>Nagroda tygodniowa</td>
+            </tr>
+            <tr>
+              <td>Nagroda dzienna</td>
+              <td>Nagroda dzienna</td>
+              <td>Nagroda dzienna</td>
+              <td>Nagroda dzienna</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -189,9 +213,9 @@
     <div class="container footer-grid">
       <img class="logo" src="assets/images/Verbena_logo_2018.png" alt="Logo Verbena" />
       <p class="footer-copy">
-        Organizatorem konkursu jest Insignia. Regulamin konkursu dostepny jest
-        <a class="footer-link" href="./regulamin.pdf" target="_blank" rel="noopener">pod tym linkiem</a>.
-        Pytania zwiazane z akcja wyslij na: <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a>.
+        Organizator Konkursu:<br>
+        Chcesz zgłosić błąd lub zadać pytanie? Napisz na <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a><br>
+        <a class="footer-link" href="./polityka-prywatnosci.html">Polityka prywatności</a>
       </p>
     </div>
   </footer>
@@ -212,6 +236,8 @@
     const registrationForm = document.getElementById("registrationForm");
     const registrationResult = document.getElementById("registrationResult");
     const submitBtn = document.getElementById("submitBtn");
+    const productModelsInput = document.getElementById("product_models");
+    const productModelsCounter = document.getElementById("product_models_counter");
 
     const statusForm = document.getElementById("statusForm");
     const statusResult = document.getElementById("statusResult");
@@ -229,7 +255,7 @@
 
     function getConfig() {
       if (!window.SUPABASE_CONFIG || !window.SUPABASE_CONFIG.url || !window.SUPABASE_CONFIG.anonKey) {
-        showResult(registrationResult, "warning", "Uzupelnij plik assets/js/supabase-config.js (SUPABASE_CONFIG.url oraz SUPABASE_CONFIG.anonKey).", false);
+        showResult(registrationResult, "warning", "Uzupełnij plik assets/js/supabase-config.js (SUPABASE_CONFIG.url oraz SUPABASE_CONFIG.anonKey).", false);
         return null;
       }
       return window.SUPABASE_CONFIG;
@@ -244,9 +270,27 @@
       return "VERBENA-" + y + m + d + "-" + random;
     }
 
+    function updateProductModelsCounter() {
+      if (!productModelsInput || !productModelsCounter) {
+        return;
+      }
+
+      const max = Number(productModelsInput.maxLength) || 1000;
+      if (productModelsInput.value.length > max) {
+        productModelsInput.value = productModelsInput.value.slice(0, max);
+      }
+
+      productModelsCounter.textContent = productModelsInput.value.length + "/" + max;
+    }
+
+    if (productModelsInput) {
+      productModelsInput.addEventListener("input", updateProductModelsCounter);
+      updateProductModelsCounter();
+    }
+
     async function uploadReceiptIfProvided(supabase, cfg, submissionCode, file) {
       if (!file || file.size === 0) {
-        throw new Error("Dodaj zdjecie paragonu.");
+        throw new Error("Dodaj zdjęcie paragonu.");
       }
 
       const ext = (file.name.split(".").pop() || "").toLowerCase();
@@ -264,7 +308,7 @@
 
       const uploadResult = await supabase.storage.from(bucket).upload(filePath, file, { upsert: false });
       if (uploadResult.error) {
-        throw new Error("Blad uploadu pliku: " + uploadResult.error.message);
+        throw new Error("Błąd uploadu pliku: " + uploadResult.error.message);
       }
       return filePath;
     }
@@ -305,7 +349,7 @@
       }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Wysylanie...";
+      submitBtn.textContent = "Wysyłanie...";
 
       try {
         const supabase = window.supabase.createClient(cfg.url, cfg.anonKey);
@@ -337,12 +381,13 @@
         await sendConfirmationEmail(supabase, cfg, payload, submissionCode);
 
         registrationForm.reset();
-        showResult(registrationResult, "success", "Zgloszenie zostalo zapisane. Twoj numer zgloszenia: " + submissionCode, false);
+        updateProductModelsCounter();
+        showResult(registrationResult, "success", "Zgłoszenie zostało zapisane. Twój numer zgłoszenia: " + submissionCode, false);
       } catch (error) {
-        showResult(registrationResult, "danger", "Nie udalo sie zapisac zgloszenia: " + error.message, false);
+        showResult(registrationResult, "danger", "Nie udało się zapisać zgłoszenia: " + error.message, false);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Wyslij zgloszenie";
+        submitBtn.textContent = "Wyślij zgłoszenie";
       }
     });
 
@@ -378,23 +423,23 @@
         }
 
         if (!rpcResult.data || rpcResult.data.length === 0) {
-          showResult(statusResult, "warning", "Nie znaleziono zgloszenia dla podanych danych.", false);
+          showResult(statusResult, "warning", "Nie znaleziono zgłoszenia dla podanych danych.", false);
           return;
         }
 
         const row = rpcResult.data[0];
         const createdAt = row.created_at ? new Date(row.created_at).toLocaleString("pl-PL") : "brak";
         const html =
-          "<strong>Numer zgloszenia:</strong> " + row.submission_code +
+          "<strong>Numer zgłoszenia:</strong> " + row.submission_code +
           "<br><strong>Status:</strong> " + row.status +
           "<br><strong>Data rejestracji:</strong> " + createdAt;
 
         showResult(statusResult, "success", html, true);
       } catch (error) {
-        showResult(statusResult, "danger", "Blad podczas sprawdzania statusu: " + error.message, false);
+        showResult(statusResult, "danger", "Błąd podczas sprawdzania statusu: " + error.message, false);
       } finally {
         statusBtn.disabled = false;
-        statusBtn.textContent = "Sprawdz";
+        statusBtn.textContent = "Sprawdź";
       }
     });
   </script>

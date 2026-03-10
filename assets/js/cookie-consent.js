@@ -99,14 +99,14 @@
     wrapper.id = 'cookieConsentBanner';
     wrapper.style.cssText = 'position:fixed;left:16px;right:16px;bottom:16px;z-index:1100;max-width:980px;margin:0 auto;';
     wrapper.innerHTML = `
-      <div class="card shadow border-0">
+      <div class="card shadow border-0" style="background:#ffffff;border:1px solid rgba(29,58,143,.18);border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.18);">
         <div class="card-body p-3 p-md-4">
-          <h2 class="h5 mb-2">Ustawienia plików cookie</h2>
-          <p class="mb-3 text-muted">Używamy niezbędnych plików cookie do działania serwisu. Opcjonalne pliki cookie (analityczne, marketingowe, preferencyjne) uruchamiamy wyłącznie po Twojej zgodzie.</p>
+          <h2 class="h5 mb-2">Szanujemy Twoją prywatność</h2>
+          <p class="mb-3 text-muted">Gdy przeglądasz naszą stronę, chcielibyśmy wykorzystywać pliki cookies i inne podobne technologie do zbierania danych (m.in. adresy IP, inne identyfikatory internetowe) w dwóch głównych celach: by analizować statystyki ruchu na stronie oraz by kierować do Ciebie reklamy w innych miejscach w internecie. Kliknij poniżej, by wyrazić zgodę albo przejdź do ustawień, aby dokonać szczegółowych wyborów co do plików cookies. Szczegóły znajdziesz w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.</p>
           <div class="d-flex flex-column flex-md-row gap-2 justify-content-end">
-            <button type="button" class="btn btn-outline-secondary" id="cookieReject">Odrzuć opcjonalne</button>
-            <button type="button" class="btn btn-outline-primary" id="cookieSettings">Ustawienia</button>
-            <button type="button" class="btn btn-primary" id="cookieAcceptAll">Akceptuję wszystkie</button>
+            <button type="button" class="btn btn-primary" id="cookieAcceptAll">Zgadzam się</button>
+            <button type="button" class="btn btn-outline-secondary" id="cookieReject">Nie wyrażam zgody</button>
+            <button type="button" class="btn btn-outline-primary" id="cookieSettings">Przejdź do ustawień</button>
           </div>
         </div>
       </div>
@@ -119,45 +119,52 @@
   function createSettingsPanel(initialConsent) {
     const panel = document.createElement('div');
     panel.id = 'cookieSettingsPanel';
-    panel.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:1200;padding:16px;';
+    panel.style.cssText = 'position:fixed;left:24px;right:24px;bottom:72px;z-index:1200;display:none;max-width:980px;margin:0 auto;';
     panel.innerHTML = `
-      <div class="card border-0 shadow" style="max-width:760px;margin:4vh auto;max-height:92vh;overflow:auto;">
-        <div class="card-body p-4">
-          <h2 class="h4 mb-3">Preferencje plików cookie</h2>
-          <p class="text-muted">Możesz zmienić zgodę w każdej chwili przyciskiem „Zarządzaj cookies” na dole strony.</p>
+      <div class="card border-0 shadow" style="max-height:72vh;overflow:auto;background:#ffffff;border:1px solid rgba(29,58,143,.22);border-radius:14px;box-shadow:0 20px 42px rgba(0,0,0,.2);">
+        <div class="card-body p-4" style="padding:28px 30px;">
+          <h2 class="h4 mb-3" style="margin:0 0 10px;color:#1d3a8f;">Szanujemy Twoją prywatność</h2>
+          <p class="text-muted" style="margin:0 0 16px;color:#3b3462;">Oto używane w naszym serwisie usługi, które mogą zapisywać na Twoim urządzeniu pliki cookies. Wybierz odpowiadające Ci ustawienia. Zawsze możesz do nich wrócić używając linku, zamieszczonego w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>. Tam też znajdziesz więcej szczegółowych informacji o używanych przez nas plikach cookies.</p>
 
-          <div class="border rounded p-3 mb-3 bg-light">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="cookieNecessary" checked disabled>
-              <label class="form-check-label" for="cookieNecessary"><strong>Niezbędne</strong> – zawsze aktywne (logika formularzy i bezpieczeństwo).</label>
-            </div>
-          </div>
-
-          <div class="border rounded p-3 mb-3">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="cookiePreferences">
-              <label class="form-check-label" for="cookiePreferences"><strong>Preferencyjne</strong> – zapamiętywanie ustawień użytkownika.</label>
-            </div>
-          </div>
-
-          <div class="border rounded p-3 mb-3">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="cookieAnalytics">
-              <label class="form-check-label" for="cookieAnalytics"><strong>Analityczne</strong> – statystyki korzystania ze strony.</label>
-            </div>
-          </div>
-
-          <div class="border rounded p-3 mb-4">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="cookieMarketing">
-              <label class="form-check-label" for="cookieMarketing"><strong>Marketingowe</strong> – personalizacja działań reklamowych.</label>
-            </div>
+          <div style="border:1px solid #d9deec;border-radius:10px;overflow:hidden;margin-bottom:16px;">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.4;">
+              <thead>
+                <tr style="background:#f5f7ff;">
+                  <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #d9deec;color:#1d3a8f;">USŁUGA</th>
+                  <th style="text-align:left;padding:10px 12px;border-bottom:1px solid #d9deec;color:#1d3a8f;">CEL UŻYCIA</th>
+                  <th style="text-align:center;padding:10px 12px;border-bottom:1px solid #d9deec;color:#1d3a8f;white-space:nowrap;">WŁĄCZ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;vertical-align:top;"><strong>Cookies wymagane</strong></td>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;vertical-align:top;">Cookies niezbędne służą do prawidłowego działania strony oraz jeszcze lepszych zabezpieczeń. Niestety nie możesz ich wyłączyć, bo po wyłączeniu nasza strona po prostu nie będzie poprawnie działać.</td>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;text-align:center;vertical-align:top;">
+                    <input type="checkbox" id="cookieNecessary" checked disabled aria-label="Cookies wymagane zawsze aktywne" style="width:18px;height:18px;min-width:18px;margin:0;accent-color:#1d3a8f;">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;vertical-align:top;"><strong>Google Analytics</strong></td>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;vertical-align:top;">Korzystamy z tego narzędzia do zebrania danych statystycznych, (na podstawie skróconego adresu IP) o sposobie korzystania przez internautów z naszej strony, np.: ilość użytkowników na stronie, skąd użytkownicy przeszli na stronę, jakie zakładki odwiedzali, czas pozostawania na stronie.</td>
+                  <td style="padding:12px;border-bottom:1px solid #e5e8f3;text-align:center;vertical-align:top;">
+                    <input type="checkbox" id="cookieAnalytics" aria-label="Zgoda na Google Analytics" style="width:18px;height:18px;min-width:18px;margin:0;accent-color:#1d3a8f;">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:12px;vertical-align:top;"><strong>Pixel Meta</strong></td>
+                  <td style="padding:12px;vertical-align:top;">Za pomocą tego narzędzia Facebook oraz Instagram zbierają informacje na temat tego jak korzystasz z naszej strony. Dzięki temu możemy w przyszłości kierować do Ciebie spersonalizowaną reklamę w ramach narzędzi reklamowych Facebooka oraz Instagrama. Facebook oraz Instagram mogą też wyświetlać nasze reklamy innym użytkownikom tego portalu, którzy mają według portalu podobne do Ciebie zainteresowania i/lub profil. My jako właściciel strony internetowej, nie gromadzimy danych pozwalających nam Cię bezpośrednio zidentyfikować.</td>
+                  <td style="padding:12px;text-align:center;vertical-align:top;">
+                    <input type="checkbox" id="cookieMarketing" aria-label="Zgoda na Pixel Meta" style="width:18px;height:18px;min-width:18px;margin:0;accent-color:#1d3a8f;">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="d-flex flex-column flex-md-row justify-content-end gap-2">
-            <button type="button" class="btn btn-outline-secondary" id="cookieClose">Anuluj</button>
-            <button type="button" class="btn btn-outline-primary" id="cookieSaveSelection">Zapisz wybór</button>
-            <button type="button" class="btn btn-primary" id="cookieSaveAll">Akceptuję wszystkie</button>
+            <button type="button" class="btn btn-outline-primary" id="cookieSaveSelection">Zapisz te ustawienia</button>
+            <button type="button" class="btn btn-outline-secondary" id="cookieRejectAll">Odrzuć wszystkie</button>
+            <button type="button" class="btn btn-primary" id="cookieSaveAll">Zaakceptuj wszystkie</button>
           </div>
         </div>
       </div>
@@ -165,7 +172,6 @@
 
     document.body.appendChild(panel);
 
-    panel.querySelector('#cookiePreferences').checked = !!initialConsent.preferences;
     panel.querySelector('#cookieAnalytics').checked = !!initialConsent.analytics;
     panel.querySelector('#cookieMarketing').checked = !!initialConsent.marketing;
 
@@ -178,7 +184,7 @@
     button.type = 'button';
     button.className = 'btn btn-sm btn-outline-secondary';
     button.textContent = 'Zarządzaj cookies';
-    button.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:1000;';
+    button.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:1000;background:#ffffff;color:#1d3a8f;border:1px solid rgba(29,58,143,0.35);';
     document.body.appendChild(button);
     return button;
   }
@@ -194,6 +200,7 @@
   function init() {
     const currentConsent = loadConsent();
     activateDeferredScripts(currentConsent);
+    const shouldOpenFromUrl = new URLSearchParams(window.location.search).get('openCookieSettings') === '1' || window.location.hash === '#cookie-settings';
 
     const manageButton = createManageButton();
     const settingsPanel = createSettingsPanel(currentConsent);
@@ -214,7 +221,6 @@
 
     function applyConsent(consent) {
       const saved = saveConsent(consent);
-      settingsPanel.querySelector('#cookiePreferences').checked = !!saved.preferences;
       settingsPanel.querySelector('#cookieAnalytics').checked = !!saved.analytics;
       settingsPanel.querySelector('#cookieMarketing').checked = !!saved.marketing;
       hideBannerIfVisible();
@@ -223,32 +229,32 @@
 
     manageButton.addEventListener('click', function () {
       const latest = loadConsent();
-      settingsPanel.querySelector('#cookiePreferences').checked = !!latest.preferences;
       settingsPanel.querySelector('#cookieAnalytics').checked = !!latest.analytics;
       settingsPanel.querySelector('#cookieMarketing').checked = !!latest.marketing;
       openSettings(settingsPanel);
     });
 
-    settingsPanel.querySelector('#cookieClose').addEventListener('click', function () {
-      closeSettings(settingsPanel);
-    });
+    if (shouldOpenFromUrl) {
+      const latest = loadConsent();
+      settingsPanel.querySelector('#cookieAnalytics').checked = !!latest.analytics;
+      settingsPanel.querySelector('#cookieMarketing').checked = !!latest.marketing;
+      openSettings(settingsPanel);
+    }
 
     settingsPanel.querySelector('#cookieSaveSelection').addEventListener('click', function () {
       applyConsent({
-        preferences: settingsPanel.querySelector('#cookiePreferences').checked,
+        preferences: false,
         analytics: settingsPanel.querySelector('#cookieAnalytics').checked,
         marketing: settingsPanel.querySelector('#cookieMarketing').checked
       });
     });
 
-    settingsPanel.querySelector('#cookieSaveAll').addEventListener('click', function () {
-      applyConsent({ preferences: true, analytics: true, marketing: true });
+    settingsPanel.querySelector('#cookieRejectAll').addEventListener('click', function () {
+      applyConsent({ preferences: false, analytics: false, marketing: false });
     });
 
-    settingsPanel.addEventListener('click', function (event) {
-      if (event.target === settingsPanel) {
-        closeSettings(settingsPanel);
-      }
+    settingsPanel.querySelector('#cookieSaveAll').addEventListener('click', function () {
+      applyConsent({ preferences: false, analytics: true, marketing: true });
     });
 
     if (banner) {
@@ -261,7 +267,7 @@
       });
 
       banner.querySelector('#cookieAcceptAll').addEventListener('click', function () {
-        applyConsent({ preferences: true, analytics: true, marketing: true });
+        applyConsent({ preferences: false, analytics: true, marketing: true });
       });
     }
   }

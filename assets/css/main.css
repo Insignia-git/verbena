@@ -52,6 +52,7 @@
       --blue: #1d3a8f;
       --pink: #cd69aa;
       --orange: #f4823c;
+      --yelow: #FFD75A;
       --red: #e65a64;
       --white: #ffffff;
       --ink: #1f1c2d;
@@ -91,7 +92,22 @@
       overflow: hidden;
     }
 
+    .section,
+    .stopka {
+      scroll-margin-top: 165px;
+    }
+
     .section-title {
+      margin: 0 0 1rem;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-size: 5.5rem;
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .winners-title,
+    .opis-heading {
       margin: 0 0 1rem;
       font-family: "Yanone Kaffeesatz", sans-serif;
       font-size: 5.5rem;
@@ -105,6 +121,74 @@
       font-size: 1.25rem;
       line-height: 1.6;
       max-width: 64ch;
+    }
+
+    .opis,
+    .zasady,
+    .formularz,
+    .winners,
+    .stopka {
+      position: relative;
+      overflow: visible;
+    }
+
+    .opis {
+      --divider-color: var(--pink);
+      --divider-image: url("../images/Group_pink.png");
+      --divider-size: 1920px 51px;
+      --divider-height: 51px;
+      padding-bottom: 8rem;
+    }
+
+    .zasady {
+      --divider-color: var(--orange);
+      --divider-image: url("../images/Group_orange.png");
+      --divider-size: 1920px 51px;
+      --divider-height: 51px;
+      padding-bottom: 8rem;
+    }
+
+    .formularz {
+      --divider-color: var(--red);
+      --divider-image: url("../images/Group_red.png");
+      --divider-size: 1920px 51px;
+      --divider-height: 51px;
+      padding-bottom: 8rem;
+    }
+
+    .winners {
+      --divider-color: #FFD75A;
+      --divider-image: url("../images/Group_yellow.png");
+      --divider-size: 1920px 51px;
+      --divider-height: 51px;
+    }
+
+    .stopka {
+      --divider-color: var(--blue);
+      --divider-image: url("../images/Group_blue.png");
+      --divider-size: 1920px 51px;
+      --divider-height: 51px;
+    }
+
+    .opis::before,
+    .zasady::before,
+    .formularz::before,
+    .winners::before,
+    .stopka::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: var(--divider-strip-width, 100%);
+      height: var(--divider-height, 42px);
+      transform: translateY(-100%) scaleX(var(--divider-scale-x, 1));
+      transform-origin: left top;
+      background-image: var(--divider-image);
+      background-repeat: repeat-x;
+      background-position: left top;
+      background-size: var(--divider-size, 20px 42px);
+      pointer-events: none;
+      z-index: 2;
     }
 
     .hero {
@@ -335,7 +419,12 @@
     .opis-cta-wrap {
       display: flex;
       justify-content: center;
-      margin-bottom: 6rem;
+      margin-bottom: 4rem;
+      margin-top: 4rem;
+    }
+
+    .opis .zasady-cta-wrap {
+      margin-top: 1.5rem;
     }
 
     .opis-cta-wrap .btn {
@@ -347,6 +436,48 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1;
+    }
+
+    .form-submit-cta {
+      min-height: 84px;
+      padding: 0.5rem 2.4rem;
+      border-radius: 999px;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-size: 3.125rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 4rem auto 0;
+      display: flex;
+      width: fit-content;
+    }
+
+    .purchase-reminder {
+      margin-top: 3rem;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .opis > .container > :last-child,
+    .zasady > .container > :last-child,
+    .formularz > .container > :last-child,
+    .winners > .container > :last-child {
+      margin-bottom: 0;
+    }
+
+    .purchase-reminder p {
+      margin: 0;
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .opis-heading {
+      position: static;
+      text-align: left;
+      color: var(--blue);
     }
 
     .opis-grid {
@@ -378,7 +509,7 @@
       left: 50%;
       top: -42px;
       transform: translateX(-50%);
-      width: min(44vw, 440px);
+      width: min(40vw, 400px);
       z-index: 3;
       pointer-events: none;
     }
@@ -407,7 +538,7 @@
     .opis-center-label .opis-center-subtitle {
       display: block;
       font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 1.55rem;
+      font-size: 1.35rem;
       letter-spacing: 0.08em;
       font-weight: 600;
       text-transform: uppercase;
@@ -418,7 +549,7 @@
     .opis-center-label .opis-center-value {
       display: block;
       font-family: "Yanone Kaffeesatz", sans-serif;
-      font-size: 7.2rem;
+      font-size: 6.8rem;
       line-height: 0.84;
       font-weight: 700;
       text-transform: none;
@@ -429,8 +560,8 @@
 
     .prize-visual {
       width: auto;
-      height: 19rem;
-      max-width: 88%;
+      height: 21rem;
+      max-width: 92%;
       margin: 0 auto 0.8rem;
       object-fit: contain;
     }
@@ -439,7 +570,7 @@
       margin: 0 0 4.2rem;
       text-align: center;
       font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.3rem;
       line-height: 1.05;
       letter-spacing: 0.01em;
       text-transform: none;
@@ -451,7 +582,7 @@
       margin: 1.25rem 0 0;
       text-align: center;
       font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       line-height: 1.35;
       font-weight: 400;
       color: var(--white);
@@ -469,31 +600,42 @@
       color: #fff;
     }
 
+    .zasady .section-title,
+    .formularz .section-title {
+      color: var(--blue);
+    }
+
     .rules-grid {
       margin-top: 2rem;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
+      justify-items: center;
     }
 
     .rule {
-      background: rgba(255, 255, 255, 0.14);
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.35);
+          text-align: center;
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.35;
+    font-weight: 400;
+    color: var(--white);
       padding: 1.25rem;
       display: grid;
-      gap: 1rem;
       align-content: start;
+      justify-items: center;
+      text-align: center;
     }
 
     .rule img {
-      width: 52px;
-      height: 52px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
+      margin-bottom: 30px;
     }
 
     .rule strong {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       font-family: "Yanone Kaffeesatz", sans-serif;
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -517,12 +659,22 @@
       align-items: start;
     }
 
+    .forms-wrap--status-only {
+      grid-template-columns: 1fr;
+      width: min(100%, 860px);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .panel-hidden-temporary {
+      display: none;
+    }
+
     .panel {
-      background: var(--white);
+      background: none; 
       color: var(--ink);
-      border-radius: var(--radius);
+      border-radius: 0px;
       padding: 1.5rem;
-      box-shadow: var(--shadow);
     }
 
     .panel h3 {
@@ -539,10 +691,28 @@
       gap: 0.9rem;
     }
 
+    .form-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      align-items: start;
+    }
+
+    .form-right textarea {
+      min-height: 320px;
+    }
+
     .field {
       display: grid;
-      gap: 0.35rem;
-      margin-bottom: 0.75rem;
+margin-top: 6px;
+    }
+
+    .char-counter {
+      justify-self: end;
+      margin-top: 0.15rem;
+      font-size: 0.9rem;
+      line-height: 1;
+      color: #5e6b8f;
     }
 
     .field.full {
@@ -550,9 +720,10 @@
     }
 
     label {
-      font-weight: 700;
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 400;
       font-size: 0.95rem;
-      color: #3a2f56;
+      color: var(--white);
     }
 
     input,
@@ -564,8 +735,8 @@
     input,
     textarea {
       width: 100%;
-      border: 1px solid #d4cee8;
-      border-radius: 10px;
+      border: 0px solid #fff;
+      border-radius: 0;
       padding: 0.72rem 0.85rem;
       background: #fff;
       color: #261f38;
@@ -577,6 +748,36 @@
       border-color: var(--blue);
     }
 
+    .file-upload {
+      position: relative;
+      width: 100%;
+      min-height: 44px;
+    }
+
+    .file-upload input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 44px;
+      padding: 0.72rem 0.85rem;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      user-select: none;
+    }
+
     textarea {
       min-height: 130px;
       resize: vertical;
@@ -586,7 +787,8 @@
       display: grid;
       grid-template-columns: 20px 1fr;
       gap: 0.6rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.1rem;
+      margin-top: 1.1rem;
       align-items: start;
     }
 
@@ -597,9 +799,16 @@
     }
 
     .check label {
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    .check label a {
+      color: var(--white);
       font-weight: 500;
-      line-height: 1.45;
-      color: #4a3a63;
+      text-decoration: underline;
     }
 
     .alert {
@@ -635,40 +844,52 @@
     }
 
     .winners {
-      background: #fff;
+      background: #FFD75A;
       color: var(--blue);
       padding-top: 5.8rem;
-      padding-bottom: 5rem;
+      padding-bottom: 8rem;
     }
 
     .winners-title {
-      margin: 0;
-      font-family: "Yanone Kaffeesatz", sans-serif;
-      font-size: 8rem;
-      line-height: 0.88;
-      text-transform: uppercase;
       color: var(--blue);
     }
 
-    .winners-grid {
+    .winners-table-wrap {
       margin-top: 1.8rem;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.9rem;
+      margin-bottom: 0;
+      overflow-x: auto;
     }
 
-    .winner {
-      border-radius: 14px;
-      border: 2px dashed rgba(29, 58, 143, 0.32);
-      padding: 1rem;
-      background: #f4f7ff;
-      min-height: 120px;
+    .winners-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: transparent;
     }
 
-    .winner strong {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-size: 1.05rem;
+    .winners-table th,
+    .winners-table td {
+      border: 0;
+      padding: 0.95rem 0.8rem;
+      text-align: left;
+      vertical-align: middle;
+      color: var(--blue);
+      background: transparent;
+    }
+
+    .winners-table thead th {
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-size: 1.9rem;
+      line-height: 0.95;
+      text-transform: uppercase;
+      background: transparent;
+    }
+
+    .winners-table td {
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 500;
+      min-height: 56px;
+      background: transparent;
     }
 
     .stopka {
@@ -679,8 +900,8 @@
 
     .footer-grid {
       display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.4rem;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
       align-items: start;
     }
 
@@ -691,7 +912,7 @@
     }
 
     .footer-copy {
-      margin: 0;
+      margin: 3rem 0 0;
       font-size: 1rem;
       line-height: 1.6;
       max-width: 72ch;
@@ -764,7 +985,7 @@
 
       .opis-center {
         width: min(55vw, 355px);
-        top: -28px;
+        top: -20px;
       }
 
       .prize-card {
@@ -801,6 +1022,7 @@
       .opis-grid,
       .rules-grid,
       .winners-grid,
+      .form-split,
       .grid,
       .footer-grid {
         grid-template-columns: 1fr;
@@ -808,6 +1030,11 @@
 
       .opis-grid {
         gap: 0.9rem;
+      }
+
+      .opis-heading {
+        top: 0.9rem;
+        font-size: 3rem;
       }
 
       .opis-grid .prize-card:first-child,
