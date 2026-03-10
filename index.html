@@ -225,7 +225,7 @@
       <p class="footer-copy">
         Organizator Konkursu:<br>
         Chcesz zgłosić błąd lub zadać pytanie? Napisz na <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a><br>
-        <a class="footer-link" href="./polityka-prywatnosci.html">Polityka prywatności</a>
+        <a class="footer-link" href="./polityka-prywatnosci.html">Polityka prywatności</a> | <a class="footer-link" href="#cookie-settings" id="manageCookiesLink">Zarządzaj cookies</a>
       </p>
     </div>
   </footer>
@@ -235,6 +235,7 @@
   <script>
     const topNav = document.querySelector(".top-nav");
     const topNavToggle = document.querySelector(".top-nav-toggle");
+    const manageCookiesLink = document.getElementById("manageCookiesLink");
 
     function updateNavScrollState() {
       if (!topNav) return;
@@ -272,6 +273,15 @@
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           closeMobileNav();
+        }
+      });
+    }
+
+    if (manageCookiesLink) {
+      manageCookiesLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (window.CookieConsent && typeof window.CookieConsent.openSettings === "function") {
+          window.CookieConsent.openSettings();
         }
       });
     }

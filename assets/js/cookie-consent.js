@@ -99,11 +99,11 @@
     wrapper.id = 'cookieConsentBanner';
     wrapper.style.cssText = 'position:fixed;left:16px;right:16px;bottom:16px;z-index:1100;max-width:980px;margin:0 auto;';
     wrapper.innerHTML = `
-      <div class="card shadow border-0" style="background:#ffffff;border:1px solid rgba(29,58,143,.18);border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.18);">
-        <div class="card-body p-3 p-md-4">
-          <h2 class="h5 mb-2">Szanujemy Twoją prywatność</h2>
-          <p class="mb-3 text-muted">Gdy przeglądasz naszą stronę, chcielibyśmy wykorzystywać pliki cookies i inne podobne technologie do zbierania danych (m.in. adresy IP, inne identyfikatory internetowe) w dwóch głównych celach: by analizować statystyki ruchu na stronie oraz by kierować do Ciebie reklamy w innych miejscach w internecie. Kliknij poniżej, by wyrazić zgodę albo przejdź do ustawień, aby dokonać szczegółowych wyborów co do plików cookies. Szczegóły znajdziesz w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.</p>
-          <div class="d-flex flex-column flex-md-row gap-2 justify-content-end">
+      <div style="background:#ffffff;border:1px solid rgba(29,58,143,.18);border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.18);">
+        <div style="padding:20px;">
+          <h2 style="margin:0 0 8px;">Szanujemy Twoją prywatność</h2>
+          <p style="margin:0 0 12px;color:#6b7280;">Gdy przeglądasz naszą stronę, chcielibyśmy wykorzystywać pliki cookies i inne podobne technologie do zbierania danych (m.in. adresy IP, inne identyfikatory internetowe) w dwóch głównych celach: by analizować statystyki ruchu na stronie oraz by kierować do Ciebie reklamy w innych miejscach w internecie. Kliknij poniżej, by wyrazić zgodę albo przejdź do ustawień, aby dokonać szczegółowych wyborów co do plików cookies. Szczegóły znajdziesz w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;">
             <button type="button" class="btn btn-primary" id="cookieAcceptAll">Zgadzam się</button>
             <button type="button" class="btn btn-outline-secondary" id="cookieReject">Nie wyrażam zgody</button>
             <button type="button" class="btn btn-outline-primary" id="cookieSettings">Przejdź do ustawień</button>
@@ -121,10 +121,10 @@
     panel.id = 'cookieSettingsPanel';
     panel.style.cssText = 'position:fixed;left:24px;right:24px;bottom:72px;z-index:1200;display:none;max-width:980px;margin:0 auto;';
     panel.innerHTML = `
-      <div class="card border-0 shadow" style="max-height:72vh;overflow:auto;background:#ffffff;border:1px solid rgba(29,58,143,.22);border-radius:14px;box-shadow:0 20px 42px rgba(0,0,0,.2);">
-        <div class="card-body p-4" style="padding:28px 30px;">
-          <h2 class="h4 mb-3" style="margin:0 0 10px;color:#1d3a8f;">Szanujemy Twoją prywatność</h2>
-          <p class="text-muted" style="margin:0 0 16px;color:#3b3462;">Oto używane w naszym serwisie usługi, które mogą zapisywać na Twoim urządzeniu pliki cookies. Wybierz odpowiadające Ci ustawienia. Zawsze możesz do nich wrócić używając linku, zamieszczonego w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>. Tam też znajdziesz więcej szczegółowych informacji o używanych przez nas plikach cookies.</p>
+      <div style="max-height:72vh;overflow:auto;background:#ffffff;border:1px solid rgba(29,58,143,.22);border-radius:14px;box-shadow:0 20px 42px rgba(0,0,0,.2);">
+        <div style="padding:28px 30px;">
+          <h2 style="margin:0 0 10px;color:#1d3a8f;">Szanujemy Twoją prywatność</h2>
+          <p style="margin:0 0 16px;color:#3b3462;">Oto używane w naszym serwisie usługi, które mogą zapisywać na Twoim urządzeniu pliki cookies. Wybierz odpowiadające Ci ustawienia. Zawsze możesz do nich wrócić używając linku, zamieszczonego w <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>. Tam też znajdziesz więcej szczegółowych informacji o używanych przez nas plikach cookies.</p>
 
           <div style="border:1px solid #d9deec;border-radius:10px;overflow:hidden;margin-bottom:16px;">
             <table style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.4;">
@@ -161,7 +161,7 @@
             </table>
           </div>
 
-          <div class="d-flex flex-column flex-md-row justify-content-end gap-2">
+          <div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;">
             <button type="button" class="btn btn-outline-primary" id="cookieSaveSelection">Zapisz te ustawienia</button>
             <button type="button" class="btn btn-outline-secondary" id="cookieRejectAll">Odrzuć wszystkie</button>
             <button type="button" class="btn btn-primary" id="cookieSaveAll">Zaakceptuj wszystkie</button>
@@ -178,17 +178,6 @@
     return panel;
   }
 
-  function createManageButton() {
-    const button = document.createElement('button');
-    button.id = 'cookieManageBtn';
-    button.type = 'button';
-    button.className = 'btn btn-sm btn-outline-secondary';
-    button.textContent = 'Zarządzaj cookies';
-    button.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:1000;background:#ffffff;color:#1d3a8f;border:1px solid rgba(29,58,143,0.35);';
-    document.body.appendChild(button);
-    return button;
-  }
-
   function openSettings(panel) {
     panel.style.display = 'block';
   }
@@ -202,13 +191,11 @@
     activateDeferredScripts(currentConsent);
     const shouldOpenFromUrl = new URLSearchParams(window.location.search).get('openCookieSettings') === '1' || window.location.hash === '#cookie-settings';
 
-    const manageButton = createManageButton();
     const settingsPanel = createSettingsPanel(currentConsent);
 
     let banner = null;
     if (!currentConsent.consentGiven) {
       banner = createBanner();
-      manageButton.style.bottom = '130px';
     }
 
     function hideBannerIfVisible() {
@@ -216,7 +203,14 @@
         banner.remove();
         banner = null;
       }
-      manageButton.style.bottom = '16px';
+    }
+
+    function openSettingsWithLatestConsent() {
+      const latest = loadConsent();
+      settingsPanel.querySelector('#cookieAnalytics').checked = !!latest.analytics;
+      settingsPanel.querySelector('#cookieMarketing').checked = !!latest.marketing;
+      hideBannerIfVisible();
+      openSettings(settingsPanel);
     }
 
     function applyConsent(consent) {
@@ -227,18 +221,8 @@
       closeSettings(settingsPanel);
     }
 
-    manageButton.addEventListener('click', function () {
-      const latest = loadConsent();
-      settingsPanel.querySelector('#cookieAnalytics').checked = !!latest.analytics;
-      settingsPanel.querySelector('#cookieMarketing').checked = !!latest.marketing;
-      openSettings(settingsPanel);
-    });
-
     if (shouldOpenFromUrl) {
-      const latest = loadConsent();
-      settingsPanel.querySelector('#cookieAnalytics').checked = !!latest.analytics;
-      settingsPanel.querySelector('#cookieMarketing').checked = !!latest.marketing;
-      openSettings(settingsPanel);
+      openSettingsWithLatestConsent();
     }
 
     settingsPanel.querySelector('#cookieSaveSelection').addEventListener('click', function () {
@@ -263,7 +247,7 @@
       });
 
       banner.querySelector('#cookieSettings').addEventListener('click', function () {
-        openSettings(settingsPanel);
+        openSettingsWithLatestConsent();
       });
 
       banner.querySelector('#cookieAcceptAll').addEventListener('click', function () {
@@ -276,8 +260,18 @@
     getConsent: loadConsent,
     hasConsent: hasConsent,
     openSettings: function () {
-      const btn = document.getElementById('cookieManageBtn');
-      if (btn) btn.click();
+      const panel = document.getElementById('cookieSettingsPanel');
+      if (!panel) return;
+
+      const latest = loadConsent();
+      const analyticsCheckbox = panel.querySelector('#cookieAnalytics');
+      const marketingCheckbox = panel.querySelector('#cookieMarketing');
+      if (analyticsCheckbox) analyticsCheckbox.checked = !!latest.analytics;
+      if (marketingCheckbox) marketingCheckbox.checked = !!latest.marketing;
+
+      const bannerEl = document.getElementById('cookieConsentBanner');
+      if (bannerEl) bannerEl.remove();
+      panel.style.display = 'block';
     },
     resetConsent: function () {
       localStorage.removeItem(STORAGE_KEY);
