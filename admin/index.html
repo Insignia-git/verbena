@@ -96,6 +96,12 @@
           <div class="col-md-auto">
             <button class="btn btn-outline-secondary" type="button" id="refreshBtn" disabled>Odśwież</button>
           </div>
+          <div class="col-md-auto">
+            <button class="btn btn-outline-success" type="button" id="exportCsvBtn" disabled>Eksport CSV</button>
+          </div>
+          <div class="col-md-auto">
+            <button class="btn btn-outline-success" type="button" id="exportExcelBtn" disabled>Eksport XLSX</button>
+          </div>
         </form>
 
         <div id="authInfo" class="alert d-none mt-3" role="alert"></div>
@@ -130,10 +136,13 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="../assets/js/supabase-config.js"></script>
   <script>
     const authForm = document.getElementById('adminAuthForm');
     const refreshBtn = document.getElementById('refreshBtn');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const exportExcelBtn = document.getElementById('exportExcelBtn');
     const loginBtn = document.getElementById('loginBtn');
     const authInfo = document.getElementById('authInfo');
     const tableBody = document.getElementById('submissionsBody');
@@ -153,6 +162,99 @@
     function formatDate(value) {
       if (!value) return '-';
       return new Date(value).toLocaleString('pl-PL');
+    }
+
+    function normalizeExportValue(value) {
+      if (value === null || value === undefined || value === '') return '-';
+      return String(value);
+    }
+
+    function getExportRows() {
+      return cachedRows.map((row) => ({
+        Data: formatDate(row.created_at),
+        Numer: normalizeExportValue(row.submission_code),
+        Status: normalizeExportValue(row.status),
+        'Imię i nazwisko': `${normalizeExportValue(row.first_name)} ${normalizeExportValue(row.last_name)}`.trim(),
+        Telefon: normalizeExportValue(row.phone),
+        'E-mail': normalizeExportValue(row.email),
+        'Odpowiedź': normalizeExportValue(row.product_models),
+        Paragon: normalizeExportValue(row.attachment_path),
+        Akceptowane: row.status === 'ZAAKCEPTOWANE' ? 'TAK' : 'NIE',
+        Odrzucone: row.status === 'ODRZUCONE' ? 'TAK' : 'NIE',
+        Ulubione: row.is_favorite === true ? 'TAK' : 'NIE',
+      }));
+    }
+
+    function escapeCsvValue(value) {
+      const text = normalizeExportValue(value).replace(/\r?\n/g, ' ');
+      if (/[,;"\n]/.test(text)) {
+        return `"${text.replace(/"/g, '""')}"`;
+      }
+      return text;
+    }
+
+    function downloadBlob(content, mimeType, fileName) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = fileName;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportToCsv() {
+      if (!cachedRows.length) {
+        showInfo('warning', 'Brak danych do eksportu.');
+        return;
+      }
+
+      const rows = getExportRows();
+      const headers = Object.keys(rows[0]);
+      const separator = ';';
+      const lines = [
+        headers.join(separator),
+        ...rows.map((row) => headers.map((header) => escapeCsvValue(row[header])).join(separator))
+      ];
+
+      const stamp = new Date().toISOString().slice(0, 19).replaceAll(':', '-');
+      const content = `\uFEFF${lines.join('\n')}`;
+      downloadBlob(content, 'text/csv;charset=utf-8;', `zgloszenia-verbena-${stamp}.csv`);
+    }
+
+    function exportToExcel() {
+      if (!cachedRows.length) {
+        showInfo('warning', 'Brak danych do eksportu.');
+        return;
+      }
+
+      if (!window.XLSX) {
+        showInfo('danger', 'Brak biblioteki XLSX. Odśwież stronę i spróbuj ponownie.');
+        return;
+      }
+
+      const rows = getExportRows();
+      const stamp = new Date().toISOString().slice(0, 19).replaceAll(':', '-');
+      const worksheet = window.XLSX.utils.json_to_sheet(rows, {
+        header: [
+          'Data',
+          'Numer',
+          'Status',
+          'Imię i nazwisko',
+          'Telefon',
+          'E-mail',
+          'Odpowiedź',
+          'Paragon',
+          'Akceptowane',
+          'Odrzucone',
+          'Ulubione'
+        ]
+      });
+      const workbook = window.XLSX.utils.book_new();
+      window.XLSX.utils.book_append_sheet(workbook, worksheet, 'Zgloszenia');
+      window.XLSX.writeFile(workbook, `zgloszenia-verbena-${stamp}.xlsx`);
     }
 
     function escapeHtml(value) {
@@ -331,6 +433,8 @@
       renderRows(cachedRows);
       showInfo('success', `Pobrano ${cachedRows.length} zgłoszeń.`);
       refreshBtn.disabled = false;
+      exportCsvBtn.disabled = cachedRows.length === 0;
+      exportExcelBtn.disabled = cachedRows.length === 0;
     }
 
     authForm.addEventListener('submit', async (event) => {
@@ -358,6 +462,9 @@
         refreshBtn.textContent = 'Odśwież';
       }
     });
+
+    exportCsvBtn.addEventListener('click', exportToCsv);
+    exportExcelBtn.addEventListener('click', exportToExcel);
   </script>
 </body>
 </html>

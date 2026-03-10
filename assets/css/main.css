@@ -197,6 +197,56 @@
       background: url("../images/img-header.png") center top / cover no-repeat;
     }
 
+    .cloud-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 5;
+    }
+
+    .cloud-1 {
+      width: clamp(130px, 18vw, 300px);
+      right: 10%;
+      top: 47%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .cloud-2 {
+      width: clamp(160px, 22vw, 380px);
+      right: 0;
+      top: 0;
+      transform: translate(40%, -52%);
+    }
+
+    .cloud-3,
+    .cloud-5 {
+      width: clamp(160px, 20vw, 320px);
+      left: 75%;
+      right: auto;
+      top: 0;
+      transform: translate(-50%, -52%);
+    }
+
+    .cloud-5 {
+      width: clamp(140px, 20vw, 300px);
+      left: 82%;
+    }
+
+    .cloud-4 {
+      width: clamp(150px, 20vw, 280px);
+      left: 0;
+      bottom: 18%;
+      transform: translate(-34%, 18%);
+    }
+
+    .opis > .container,
+    .zasady > .container,
+    .formularz > .container {
+      position: relative;
+      z-index: 3;
+    }
+
     .top-nav {
       position: fixed;
       top: 0;
@@ -1075,5 +1125,38 @@ margin-top: 6px;
 
       .logo {
         width: 120px;
+      }
+
+      .cloud-1,
+      .cloud-2,
+      .cloud-3,
+      .cloud-5,
+      .cloud-4 {
+        width: clamp(84px, 24vw, 130px);
+      }
+
+      .cloud-1 {
+        right: 4%;
+      }
+
+      .cloud-2,
+      .cloud-3,
+      .cloud-5 {
+        transform: translate(18%, -50%);
+      }
+
+      .cloud-3,
+      .cloud-5 {
+        left: auto;
+        right: 0;
+      }
+
+      .cloud-5 {
+        width: clamp(76px, 22vw, 118px);
+        right: -4%;
+      }
+
+      .cloud-4 {
+        transform: translate(-18%, 18%);
       }
     }
