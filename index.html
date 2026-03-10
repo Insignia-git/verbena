@@ -130,8 +130,9 @@
                   <label for="receipt_file">Wgraj zdjęcie paragonu *</label>
                   <div class="file-upload">
                     <input type="file" id="receipt_file" name="receipt_file" accept=".jpg,.jpeg,.png" required />
-                    <span class="file-upload-label" aria-hidden="true">Wybierz plik</span>
+                    <span class="file-upload-label" id="receiptFileLabel" aria-hidden="true">Wybierz plik</span>
                   </div>
+                  <p class="file-upload-feedback" id="receiptFileFeedback" aria-live="polite" hidden>Zdjęcie zostało dodane poprawnie.</p>
                 </div>
               </div>
               <div class="form-right">
@@ -291,6 +292,9 @@
     const submitBtn = document.getElementById("submitBtn");
     const productModelsInput = document.getElementById("product_models");
     const productModelsCounter = document.getElementById("product_models_counter");
+    const receiptFileInput = document.getElementById("receipt_file");
+    const receiptFileLabel = document.getElementById("receiptFileLabel");
+    const receiptFileFeedback = document.getElementById("receiptFileFeedback");
 
     const statusForm = document.getElementById("statusForm");
     const statusResult = document.getElementById("statusResult");
@@ -323,6 +327,17 @@
       return "VERBENA-" + y + m + d + "-" + random;
     }
 
+    function updateReceiptFileUi() {
+      if (!receiptFileInput || !receiptFileLabel || !receiptFileFeedback) {
+        return;
+      }
+
+      const hasFile = !!(receiptFileInput.files && receiptFileInput.files.length > 0);
+      receiptFileLabel.classList.toggle("is-success", hasFile);
+      receiptFileLabel.textContent = hasFile ? "Zdjęcie dodane" : "Wybierz plik";
+      receiptFileFeedback.hidden = !hasFile;
+    }
+
     function updateProductModelsCounter() {
       if (!productModelsInput || !productModelsCounter) {
         return;
@@ -339,6 +354,11 @@
     if (productModelsInput) {
       productModelsInput.addEventListener("input", updateProductModelsCounter);
       updateProductModelsCounter();
+    }
+
+    if (receiptFileInput) {
+      receiptFileInput.addEventListener("change", updateReceiptFileUi);
+      updateReceiptFileUi();
     }
 
     async function uploadReceiptIfProvided(supabase, cfg, submissionCode, file) {
@@ -435,6 +455,7 @@
 
         registrationForm.reset();
         updateProductModelsCounter();
+        updateReceiptFileUi();
         showResult(registrationResult, "success", "Zgłoszenie zostało zapisane. Twój numer zgłoszenia: " + submissionCode, false);
       } catch (error) {
         showResult(registrationResult, "danger", "Nie udało się zapisać zgłoszenia: " + error.message, false);

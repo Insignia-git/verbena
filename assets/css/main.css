@@ -865,6 +865,18 @@ margin-top: 6px;
       font-weight: 600;
       text-align: center;
       user-select: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .file-upload-label.is-success {
+      background: #1f8f4d;
+    }
+
+    .file-upload-feedback {
+      margin: 0.5rem 0 0;
+      font-size: 0.9rem;
+      color: #d6ffd6;
+      font-weight: 600;
     }
 
     textarea {
