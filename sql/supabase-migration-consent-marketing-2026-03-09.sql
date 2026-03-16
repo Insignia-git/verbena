@@ -9,5 +9,4 @@ to anon, authenticated
 with check (
   consent_rules is true
   and consent_privacy is true
-  and consent_marketing is true
 );

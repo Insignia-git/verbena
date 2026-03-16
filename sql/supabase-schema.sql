@@ -57,17 +57,26 @@ for each row
 execute function public.set_updated_at();
 
 alter table public.contest_submissions enable row level security;
+alter table public.admin_access enable row level security;
 
 drop policy if exists "anon insert submissions" on public.contest_submissions;
 create policy "anon insert submissions"
 on public.contest_submissions
 for insert
 to anon, authenticated
-with check (consent_rules is true and consent_privacy is true and consent_marketing is true);
+with check (consent_rules is true and consent_privacy is true);
 
 drop policy if exists "service full submissions" on public.contest_submissions;
 create policy "service full submissions"
 on public.contest_submissions
+for all
+to service_role
+using (true)
+with check (true);
+
+drop policy if exists "service full admin access" on public.admin_access;
+create policy "service full admin access"
+on public.admin_access
 for all
 to service_role
 using (true)

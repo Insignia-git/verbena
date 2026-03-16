@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="pl">
 <head>
+  <!-- Google tag (gtag.js) - loaded after analytics consent -->
+  <script type="text/plain" data-cookie-category="analytics" async src="https://www.googletagmanager.com/gtag/js?id=AW-18006209335"></script>
+  <script type="text/plain" data-cookie-category="analytics">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    const GOOGLE_ADS_TAG_ID = 'AW-18006209335';
+    const GA4_MEASUREMENT_ID = 'G-MN7PP3P3PR';
+
+    gtag('js', new Date());
+    gtag('config', GOOGLE_ADS_TAG_ID);
+
+    if (!GA4_MEASUREMENT_ID.includes('REPLACE_WITH_GA4_ID')) {
+      gtag('config', GA4_MEASUREMENT_ID);
+    }
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Konkurs Verbena - Radosny Smak Wiosny</title>
@@ -9,42 +24,26 @@
   <link rel="preload" href="./assets/fonts/Geist/Geist-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/Yanone_Kaffeesatz/YanoneKaffeesatz-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./assets/css/main.css" />
+  <!-- Meta Pixel Code - loaded after marketing consent -->
+  <script type="text/plain" data-cookie-category="marketing">
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '955223327016358');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=955223327016358&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
-  <script>
-    (function () {
-      const PRELAUNCH_STORAGE_KEY = "verbena_prelaunch_access";
-      const PRELAUNCH_PASSWORD = "verbena2026";
-
-      function normalizePassword(input) {
-        return (input || "").replace(/\s+/g, "").toLowerCase();
-      }
-
-      try {
-        if (localStorage.getItem(PRELAUNCH_STORAGE_KEY) === "ok") {
-          return;
-        }
-      } catch (error) {
-        console.warn("Nie udało się odczytać localStorage:", error);
-      }
-
-      let isValid = false;
-      while (!isValid) {
-        const enteredPassword = window.prompt("Podaj hasło dostępu do strony:", "");
-        if (enteredPassword === null) {
-          continue;
-        }
-
-        isValid = normalizePassword(enteredPassword) === normalizePassword(PRELAUNCH_PASSWORD);
-      }
-
-      try {
-        localStorage.setItem(PRELAUNCH_STORAGE_KEY, "ok");
-      } catch (error) {
-        console.warn("Nie udało się zapisać localStorage:", error);
-      }
-    })();
-  </script>
+  <script src="./assets/js/prelaunch-gate.js?v=20260316-1"></script>
 
   <header id="top" class="section hero">
     <img class="cloud-deco cloud-1" src="assets/images/kwiatek_1.png" alt="" aria-hidden="true" />
@@ -63,13 +62,13 @@
       </button>
       <div class="top-nav-group top-nav-right">
         <a class="top-nav-link" href="#formularz">Weź udział</a>
-        <a class="top-nav-link" href="./assets/docs/Regulamin_konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
+        <a class="top-nav-link" href="./assets/docs/Regulamin_Konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
       </div>
       <div class="top-nav-mobile-menu" aria-label="Menu mobilne">
         <a class="top-nav-link" href="#opis">Nagrody</a>
         <a class="top-nav-link" href="#zasady">Zasady konkursu</a>
         <a class="top-nav-link" href="#formularz">Weź udział</a>
-        <a class="top-nav-link" href="./assets/docs/Regulamin_konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
+        <a class="top-nav-link" href="./assets/docs/Regulamin_Konkursu_Verbena.pdf" target="_blank" rel="noopener">Regulamin</a>
       </div>
     </nav>
 
@@ -194,8 +193,8 @@
                   <label for="consent_privacy">*Potwierdzam, iż zapoznałem/am się z klauzulą informacyjną dotyczącą przetwarzania danych osobowych, o której mowa w § 9 Regulaminu Konkursu oraz <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.</label>
                 </div>
                 <div class="check">
-                  <input type="checkbox" value="1" id="consent_marketing" name="consent_marketing" required />
-                  <label for="consent_marketing">*Wyrażam zgodę na otrzymywanie od I.D.C. Polonia S.A. informacji handlowych drogą elektroniczną na podany przeze mnie adres e-mail, dotyczących produktów i usług I.D.C. Polonia S.A., zgodnie z <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.</label>
+                  <input type="checkbox" value="1" id="consent_marketing" name="consent_marketing" />
+                  <label for="consent_marketing">Wyrażam zgodę na otrzymywanie od I.D.C. Polonia S.A. informacji handlowych drogą elektroniczną na podany przeze mnie adres e-mail, dotyczących produktów i usług I.D.C. Polonia S.A., zgodnie z <a href="./polityka-prywatnosci.html" target="_blank" rel="noopener">Polityką prywatności</a>.</label>
                 </div>
               </div>
             </div>
@@ -204,6 +203,16 @@
                 <p>PAMIĘTAJ!<br class="mobile-only-break"> Zachowaj dowód zakupu do końca trwania konkursu!</p>
               </div>
           </form>
+          <div id="postSubmitSuccess" class="post-submit-success" hidden>
+            <p class="post-submit-success-copy">
+              <span class="post-submit-success-headline">Dziękujemy za udział!</span>
+              Twoje zgłoszenie zostało wysłane poprawnie. Masz więcej paragonów?<br>Graj dalej i zarejestruj kolejne zgłoszenie.
+            </p>
+            <button type="button" class="btn btn-primary post-submit-success-btn" id="playAgainBtn">Graj dalej</button>
+            <div class="purchase-reminder purchase-reminder--success">
+              <p>PAMIĘTAJ!<br class="mobile-only-break"> Zachowaj dowód zakupu do końca trwania konkursu!</p>
+            </div>
+          </div>
           <div id="registrationResult" class="alert" hidden></div>
         </div>
 
@@ -264,7 +273,7 @@
     <div class="container footer-grid">
       <img class="logo" src="assets/images/Verbena_logo_2018.png" alt="Logo Verbena" />
       <p class="footer-copy">
-        Organizator Konkursu:<br>
+        Organizator Konkursu: I.D.C. Polonia S.A.<br>
         Chcesz zgłosić błąd lub zadać pytanie?<br class="mobile-only-break">Napisz na <a class="footer-link" href="mailto:konkurs@insignia.pl">konkurs@insignia.pl</a><br>
         <a class="footer-link" href="./polityka-prywatnosci.html">Polityka prywatności</a> | <a class="footer-link" href="#cookie-settings" id="manageCookiesLink">Zarządzaj cookies</a>
       </p>
@@ -335,6 +344,8 @@
     const receiptFileInput = document.getElementById("receipt_file");
     const receiptFileLabel = document.getElementById("receiptFileLabel");
     const receiptFileFeedback = document.getElementById("receiptFileFeedback");
+    const postSubmitSuccess = document.getElementById("postSubmitSuccess");
+    const playAgainBtn = document.getElementById("playAgainBtn");
 
     const statusForm = document.getElementById("statusForm");
     const statusResult = document.getElementById("statusResult");
@@ -356,6 +367,32 @@
         return null;
       }
       return window.SUPABASE_CONFIG;
+    }
+
+    const ADS_CONVERSION_SEND_TO = "AW-18006209335/REPLACE_WITH_CONVERSION_LABEL";
+
+    function trackLeadConversion(submissionCode) {
+      if (ADS_CONVERSION_SEND_TO.includes("REPLACE_WITH_CONVERSION_LABEL")) {
+        return;
+      }
+
+      const sendConversion = function () {
+        if (typeof window.gtag !== "function") {
+          return;
+        }
+
+        window.gtag("event", "conversion", {
+          send_to: ADS_CONVERSION_SEND_TO,
+          transaction_id: submissionCode
+        });
+      };
+
+      if (window.CookieConsent && typeof window.CookieConsent.runIfConsented === "function") {
+        window.CookieConsent.runIfConsented("analytics", sendConversion);
+        return;
+      }
+
+      sendConversion();
     }
 
     function generateSubmissionCode() {
@@ -401,6 +438,15 @@
       productModelsCounter.textContent = productModelsInput.value.length + "/" + max;
     }
 
+    function setRegistrationSuccessView(isVisible) {
+      if (!registrationForm || !postSubmitSuccess) {
+        return;
+      }
+
+      registrationForm.hidden = isVisible;
+      postSubmitSuccess.hidden = !isVisible;
+    }
+
     if (productModelsInput) {
       productModelsInput.addEventListener("input", updateProductModelsCounter);
       updateProductModelsCounter();
@@ -409,6 +455,12 @@
     if (receiptFileInput) {
       receiptFileInput.addEventListener("change", updateReceiptFileUi);
       updateReceiptFileUi();
+    }
+
+    if (playAgainBtn) {
+      playAgainBtn.addEventListener("click", function () {
+        setRegistrationSuccessView(false);
+      });
     }
 
     async function uploadReceiptIfProvided(supabase, cfg, submissionCode, file) {
@@ -502,11 +554,12 @@
         }
 
         await sendConfirmationEmail(supabase, cfg, payload, submissionCode);
+        trackLeadConversion(submissionCode);
 
         registrationForm.reset();
         updateProductModelsCounter();
         updateReceiptFileUi();
-        showResult(registrationResult, "success", "Twoje zgłoszenie zostało zapisane.", false);
+        setRegistrationSuccessView(true);
       } catch (error) {
         showResult(registrationResult, "danger", "Nie udało się zapisać zgłoszenia: " + error.message, false);
       } finally {

@@ -191,7 +191,7 @@
 
     .winners-title,
     .opis-heading {
-      margin: 0 0 1rem;
+      margin: 7rem 0 1rem 0;
       padding-left: 0.12em;
       font-family: "Yanone Kaffeesatz", sans-serif;
       font-size: 5.5rem;
@@ -378,7 +378,7 @@
 
     .top-nav-brand {
       display: block;
-      transform: translateY(-6px);
+      transform: translateY(-4px);
       justify-self: center;
     }
 
@@ -619,6 +619,7 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1;
+      padding-top: 17px;
     }
 
     .form-submit-cta {
@@ -633,12 +634,61 @@
       margin: 4rem auto 0;
       display: flex;
       width: fit-content;
+      padding-top: 17px;
     }
 
     .purchase-reminder {
       margin-top: 3rem;
       margin-bottom: 0;
       text-align: center;
+    }
+
+    .post-submit-success {
+      width: min(100%, 954px);
+      margin: 0 auto;
+      padding: 1.2rem 0;
+      display: grid;
+      gap: 0;
+      justify-items: center;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .post-submit-success[hidden] {
+      display: none !important;
+    }
+
+    .post-submit-success-copy {
+      margin: 0;
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.3rem;
+      line-height: 1.35;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: #ffffff;
+    }
+
+    .post-submit-success-headline {
+      display: block;
+      margin-bottom: 3.5rem;
+    }
+
+    .post-submit-success-btn {
+      margin-top: 4.2rem;
+      margin-bottom: 2rem;
+      min-height: 84px;
+      padding: 0.5rem 2.4rem;
+      border-radius: 999px;
+      font-family: "Yanone Kaffeesatz", sans-serif;
+      font-size: 3.125rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+      padding-top: 17px;
+    }
+
+    .purchase-reminder--success {
+      margin-top: 2.4rem;
     }
 
     .opis > .container > :last-child,
@@ -655,6 +705,13 @@
       font-weight: 500;
       color: var(--white);
       line-height: 1.4;
+    }
+
+    .purchase-reminder--success p {
+      font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.3rem;
+      line-height: 1.35;
+      font-weight: 400;
     }
 
     .mobile-only-break {
@@ -899,7 +956,7 @@ margin-top: 6px;
       margin-top: 0.15rem;
       font-size: 0.9rem;
       line-height: 1;
-      color: #5e6b8f;
+      color: #fff;
     }
 
     .field.full {
@@ -1140,6 +1197,57 @@ margin-top: 6px;
       }
     }
 
+    @media (max-width: 1390px) and (min-width: 1367px) {
+      .hero-inner {
+        min-height: clamp(560px, 76vh, 780px);
+        align-items: center;
+      }
+
+      .hero-panel {
+        align-self: center;
+        padding: 1.4rem 1.4rem 1.2rem;
+      }
+
+      .hero-kicker {
+        margin-bottom: 1rem;
+        font-size: clamp(3.7rem, 4.5vw, 4.5rem);
+      }
+
+      .hero-title {
+        font-size: clamp(6rem, 7vw, 7.2rem);
+      }
+
+      .hero-title-line-1 {
+        text-indent: 0.2em;
+      }
+    }
+
+    @media (max-width: 1366px) and (min-width: 1025px) {
+      .hero-inner {
+        min-height: clamp(520px, 74vh, 760px);
+        gap: 1.4rem;
+        align-items: center;
+      }
+
+      .hero-panel {
+        align-self: center;
+        padding: 1.4rem 1.2rem 1.2rem;
+      }
+
+      .hero-kicker {
+        margin-bottom: 0.9rem;
+        font-size: clamp(3.3rem, 4.6vw, 4.4rem);
+      }
+
+      .hero-title {
+        font-size: clamp(5.3rem, 8.2vw, 7rem);
+      }
+
+      .hero-title-line-1 {
+        text-indent: 0.16em;
+      }
+    }
+
     @media (max-width: 1024px) {
       .forms-wrap {
         grid-template-columns: 1fr;
@@ -1258,7 +1366,10 @@ margin-top: 6px;
       }
 
       .section.opis {
-        padding-top: 2.05rem;
+        margin-top: 0rem;
+        padding-top: 1.05rem;
+        position: relative;
+        z-index: 1;
       }
 
       .container {
@@ -1267,12 +1378,13 @@ margin-top: 6px;
 
       .hero {
         min-height: auto;
-        padding-top: 1.4rem;
-        background: url("../images/mobile_header.jpg") center top / cover no-repeat;
+        padding-top: 5.4rem;
+        overflow: hidden;
+        background: url("../images/mobile_header_sm.jpg") top center / 100% auto no-repeat;
       }
 
       .hero-inner {
-        min-height: clamp(420px, 78vh, 760px);
+        min-height: clamp(320px, 62vh, 560px);
       }
 
       .hero-panel,
@@ -1311,7 +1423,7 @@ margin-top: 6px;
 
       .top-nav-toggle {
         display: inline-flex;
-        margin-top: 4.6rem;
+        margin-top: 3rem;
       }
 
       .top-nav.is-open .top-nav-mobile-menu {
@@ -1370,7 +1482,7 @@ margin-top: 6px;
       }
 
       .opis-heading {
-        margin-top: 3rem;
+        margin-top: 5rem;
         top: 0.9rem;
       }
 
@@ -1422,6 +1534,7 @@ margin-top: 6px;
         width: auto;
         min-height: 52px;
         padding: 0.4rem 1.6rem;
+        padding-top: 11px;
         font-size: 1.95rem;
       }
 
@@ -1433,7 +1546,21 @@ margin-top: 6px;
         width: auto;
         min-height: 52px;
         padding: 0.4rem 1.6rem;
+        padding-top: 11px;
         font-size: 1.95rem;
+      }
+
+      .post-submit-success {
+        padding: 0.5rem 0;
+      }
+
+      .post-submit-success-btn {
+        width: auto;
+        min-height: 52px;
+        padding: 0.4rem 1.6rem;
+        padding-top: 11px;
+        font-size: 1.95rem;
+        margin-top: 3.8rem;
       }
 
       .hero-cta-wrap {
